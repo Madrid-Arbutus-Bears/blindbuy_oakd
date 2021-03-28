@@ -1,4 +1,7 @@
+import os
+from glob import glob
 from setuptools import setup
+from setuptools import find_packages
 
 package_name = 'blindbuy_oakd'
 
@@ -10,6 +13,12 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+         # Include all launch files
+        (os.path.join('share', package_name), glob('launch/*.py')),
+        # Include rviz files
+        (os.path.join('share', package_name), glob('rviz/*rviz')),
+        # Include models files
+        (os.path.join('share', package_name), glob('models/*blob')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -20,6 +29,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'state_publisher = blindbuy_oakd.state_publisher:main'
+            'img_publisher = blindbuy_oakd.img_publisher:main'
         ],
     },
 )
