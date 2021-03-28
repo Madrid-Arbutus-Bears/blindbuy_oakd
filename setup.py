@@ -29,8 +29,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'state_publisher = blindbuy_oakd.state_publisher:main'
-            'img_publisher = blindbuy_oakd.img_publisher:main'
+            'face_detection = ' + package_name + '.face_detection:main',
         ],
     },
 )
