@@ -24,8 +24,8 @@ class StatePublisher(Node):
         qos_profile = QoSProfile(depth=10)
         self.broadcaster = TransformBroadcaster(self, qos=qos_profile)
         #Image publisher
-        self.pub_depth_img = self.create_publisher(sensor_msgs.msg.Image, "/depth_img", 10)
-        self.pub_rectified_img = self.create_publisher(sensor_msgs.msg.Image, "/rectified_img", 10)
+        #self.pub_depth_img = self.create_publisher(sensor_msgs.msg.Image, "/depth_img", 10)
+        #self.pub_rectified_img = self.create_publisher(sensor_msgs.msg.Image, "/rectified_img", 10)
         
         # Transform declaration
         self.transform = TransformStamped()
@@ -37,7 +37,7 @@ class StatePublisher(Node):
         self.flipRectified = True
 
         # Get argument first
-        model_file_name='face-detection-retail-0004.blob'
+        model_file_name='face-detection-retail-0004_openvino_2021.2_4shave.blob'
         nnPath = os.path.join(get_package_share_directory('blindbuy_oakd'), model_file_name)
         print(nnPath)
 
@@ -51,7 +51,7 @@ class StatePublisher(Node):
         manip.initialConfig.setResize(300, 300)
         # The NN model expects BGR input. By default ImageManip output type would be same as input (gray in this case)
         manip.initialConfig.setFrameType(dai.RawImgFrame.Type.BGR888p)
-        # manip.setKeepAspectRatio(False)
+        manip.setKeepAspectRatio(False) #Squeeze image without cropping to fit 300x300 nn input
 
         # Define a neural network that will make predictions based on the source frames
         spatialDetectionNetwork = self.pipeline.createMobileNetSpatialDetectionNetwork()
@@ -193,10 +193,10 @@ class StatePublisher(Node):
 
                 cvb = CvBridge()
                 cv2.putText(rectifiedRight, "NN fps: {:.2f}".format(fps), (2, rectifiedRight.shape[0] - 4), cv2.FONT_HERSHEY_TRIPLEX, 0.4, color)
-                #cv2.imshow("depth", depthFrameColor)
-                self.pub_depth_img.publish(cvb.cv2_to_imgmsg(depthFrameColor))
-                #cv2.imshow("rectified right", rectifiedRight)
-                self.pub_rectified_img.publish(cvb.cv2_to_imgmsg(rectifiedRight))
+                cv2.imshow("depth", depthFrameColor)
+                #self.pub_depth_img.publish(cvb.cv2_to_imgmsg(depthFrameColor))
+                cv2.imshow("rectified right", rectifiedRight)
+                #self.pub_rectified_img.publish(cvb.cv2_to_imgmsg(rectifiedRight))
 
                 if cv2.waitKey(1) == ord('q'):
                     break
