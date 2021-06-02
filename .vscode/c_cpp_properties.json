@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/dani/oakd_ws/devel/include/**",
+        "/home/dani/cartographer_ws/install_isolated/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/dani/turtlebot3_ws/install/turtlebot3_gazebo/include/**",
+        "/home/dani/turtlebot3_ws/install/turtlebot3_fake_node/include/**",
+        "/home/dani/turtlebot3_ws/install/explorer_interfaces/include/**",
+        "/home/dani/oakd_ws/src/oakd_mapper/depthai-ros/depthai_bridge/include/**",
+        "/home/dani/oakd_ws/src/oakd_mapper/depthai-ros-examples/depthai_examples/include/**",
+        "/home/dani/oakd_ws/src/oakd_mapper/vision_msgs/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
