@@ -1,6 +1,10 @@
 # blindbuy_oakd
 
 ## Installation
+Python libraries:
+
+    pip3 install pyserial
+  
 Clone repository:
 ```
 cd ros2_ws/src
