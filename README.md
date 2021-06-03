@@ -28,3 +28,23 @@ for sysdevpath in $(find /sys/bus/usb/devices/usb*/ -name dev); do
 done
 ```
     sudo chmod 666 /dev/ttyUSB0
+    
+I'm using ROS 2 Foxy in Ubuntu 20.04. I have this added in ~/.bashrc  
+```
+source /opt/ros/foxy/setup.bash
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=~/ros2_ws
+source ~/ros2_ws/install/setup.bash
+```
+And then:
+```
+sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/install_dependencies.sh | bash
+```
+```
+mkdir -p ros2_ws/src
+cd ros2_ws
+wget https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/underlay.repos
+vcs import src < underlay.repos
+rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy
+colcon build
+```
