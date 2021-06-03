@@ -1,8 +1,0 @@
-[submodule "depthai-ros"]
-	path = depthai-ros
-	url = https://github.com/luxonis/depthai-ros.git
-	branch = foxy-devel
-[submodule "depthai-ros-examples"]
-	path = depthai-ros-examples
-	url = https://github.com/luxonis/depthai-ros-examples.git
-	branch = foxy-wip
