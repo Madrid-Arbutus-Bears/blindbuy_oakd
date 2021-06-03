@@ -2,21 +2,26 @@
 
 ## Installation
 Python libraries:
+```
+pip3 install pyserial
+```
+Copy rules for usb devices:
+```
+sudo cp ~/ros2_ws/src/blindbuy_oakd/cfg/99-usb.rules /etc/udev/rules.d/
+```
+[Find usb devices name:](https://unix.stackexchange.com/questions/144029/command-to-determine-ports-of-a-device-like-dev-ttyusb0)
+```
+#!/bin/bash
 
-    pip3 install pyserial
-  
-Clone repository:
+for sysdevpath in $(find /sys/bus/usb/devices/usb*/ -name dev); do
+    (
+        syspath="${sysdevpath%/dev}"
+        devname="$(udevadm info -q name -p $syspath)"
+        [[ "$devname" == "bus/"* ]] && exit
+        eval "$(udevadm info -q property --export -p $syspath)"
+        [[ -z "$ID_SERIAL" ]] && exit
+        echo "/dev/$devname - $ID_SERIAL"
+    )
+done
 ```
-cd ros2_ws/src
-git clone https://github.com/DaniGarciaLopez/blindbuy_oakd.git --recursive
-```
-Follow [official installation guide](https://docs.luxonis.com/projects/api/en/latest/install/):
-```
-sudo wget -qO- http://docs.luxonis.com/_static/install_dependencies.sh | bash
-python3 -m pip install depthai
-```
-Install pip requirements:
-```
-cd depthai-python/examples
-python3 install_requirements.py
-```
+    sudo chmod 666 /dev/ttyUSB0
