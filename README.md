@@ -1,7 +1,9 @@
 # blindbuy_oakd
 
 ## Installation
+
 [Install CH340 driver](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/drivers-if-you-need-them)
+
 Python libraries:
 ```
 pip3 install pyserial
