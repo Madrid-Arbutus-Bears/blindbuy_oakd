@@ -29,7 +29,12 @@ done
 ```
     sudo chmod 666 /dev/ttyUSB0
     
-Add in ~/.bashrc  
+(NOETIC) Add in ~/.bashrc     
+```
+source /opt/ros/noetic/setup.bash
+source ~/catkin_ws/devel/setup.bash
+```
+(FOXY) Add in ~/.bashrc  
 ```
 source /opt/ros/foxy/setup.bash
 source /usr/share/colcon_cd/function/colcon_cd.sh
