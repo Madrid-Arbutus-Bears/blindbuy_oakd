@@ -1,6 +1,57 @@
 # blindbuy_oakd
 
 ## Installation
+### Prerrequesites
+```
+sudo apt install libopencv-dev
+sudo apt install python3-vcstool
+```
+```
+sudo apt install python3-rosdep
+sudo rosdep init
+rosdep update
+```
+### ROS Noetic
+Add in ~/.bashrc     
+```
+source /opt/ros/noetic/setup.bash
+source ~/catkin_ws/devel/setup.bash
+```
+The following script will install depthai-core and update usb rules and install depthai devices
+
+```
+sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/noetic-devel/install_dependencies.sh | sudo bash
+```
+```
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws
+wget https://raw.githubusercontent.com/luxonis/depthai-ros/noetic-devel/underlay.repos
+vcs import src < underlay.repos
+rosdep install --from-paths src --ignore-src -r -y
+catkin_make
+```
+
+### ROS Foxy
+Add in ~/.bashrc  
+```
+source /opt/ros/foxy/setup.bash
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=~/ros2_ws
+source ~/ros2_ws/install/setup.bash
+```
+The following script will install depthai-core and update usb rules and install depthai devices
+```
+sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/install_dependencies.sh | sudo bash
+```
+```
+mkdir -p ~/ros2_ws/src
+cd  ~/ros2_ws
+wget https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/underlay.repos
+vcs import src < underlay.repos
+rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy
+colcon build
+```
+### Install drivers
 
 [Install CH340 driver](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/drivers-if-you-need-them)
 
@@ -29,27 +80,4 @@ done
 ```
     sudo chmod 666 /dev/ttyUSB0
     
-(NOETIC) Add in ~/.bashrc     
-```
-source /opt/ros/noetic/setup.bash
-source ~/catkin_ws/devel/setup.bash
-```
-(FOXY) Add in ~/.bashrc  
-```
-source /opt/ros/foxy/setup.bash
-source /usr/share/colcon_cd/function/colcon_cd.sh
-export _colcon_cd_root=~/ros2_ws
-source ~/ros2_ws/install/setup.bash
-```
-And then:
-```
-sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/install_dependencies.sh | bash
-```
-```
-mkdir -p ros2_ws/src
-cd ros2_ws
-wget https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/underlay.repos
-vcs import src < underlay.repos
-rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy
-colcon build
-```
+
