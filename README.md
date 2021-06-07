@@ -29,7 +29,7 @@ done
 ```
     sudo chmod 666 /dev/ttyUSB0
     
-I'm using ROS 2 Foxy in Ubuntu 20.04. I have this added in ~/.bashrc  
+Add in ~/.bashrc  
 ```
 source /opt/ros/foxy/setup.bash
 source /usr/share/colcon_cd/function/colcon_cd.sh
