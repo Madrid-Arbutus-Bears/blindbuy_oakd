@@ -30,7 +30,10 @@ vcs import src < underlay.repos
 rosdep install --from-paths src --ignore-src -r -y
 catkin_make
 ```
-
+#### JSK Visualization Plugin - (https://github.com/jsk-ros-pkg/jsk_visualization)
+```
+sudo apt-get install ros-noetic-jsk-visualization
+```
 ### ROS Foxy
 Add in ~/.bashrc  
 ```
