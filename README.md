@@ -105,22 +105,40 @@ done
 sudo chmod 666 /dev/ttyUSB0
 ```
 ## Launch
-Source ROS 2 Foxy:
+### ROS Bridge
+Source:
+```
+source /opt/ros/noetic/setup.bash
+source /opt/ros/foxy/setup.bash
+```
+Run:
+```
+ros2 run ros1_bridge dynamic_bridge
+```
+### ROS Noetic
+Source:
+```
+source /opt/ros/noetic/setup.bash
+source ~/catkin_ws/devel/setup.bash
+```
+1st terminal:
+```
+roscore
+```
+2nd terminal:
+```
+roslaunch depthai_examples mobile_publisher.launch
+```
+### ROS 2 Foxy
+Source:
 ```
 source /opt/ros/foxy/setup.bash
 source /usr/share/colcon_cd/function/colcon_cd.sh
 export _colcon_cd_root=~/ros2_ws
 source ~/ros2_ws/install/setup.bash
 ```
-Source ROS Noetic:
-```
-source /opt/ros/noetic/setup.bash
-source ~/catkin_ws/devel/setup.bash
-```
-Source ROS Bridge:
-```
-source /opt/ros/noetic/setup.bash
-source /opt/ros/foxy/setup.bash
-```
+
+
+
 
 
