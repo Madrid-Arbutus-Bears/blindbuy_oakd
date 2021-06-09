@@ -105,10 +105,14 @@ sudo chmod 666 /dev/ttyUSB0
 Source ROS 2 Foxy:
 ```
 source /opt/ros/foxy/setup.bash
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=~/ros2_ws
+source ~/ros2_ws/install/setup.bash
 ```
 Source ROS Noetic:
 ```
 source /opt/ros/noetic/setup.bash
+source ~/catkin_ws/devel/setup.bash
 ```
 Source ROS Bridge:
 ```
