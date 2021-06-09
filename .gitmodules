@@ -1,3 +1,0 @@
-[submodule "detection_visualizer"]
-	path = detection_visualizer
-	url = https://github.com/ros2/detection_visualizer.git
