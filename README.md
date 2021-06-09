@@ -15,7 +15,16 @@ Recommended to install terminator:
 ```
 sudo apt-get install -y terminator
 ```
+Add in ~/.bashrc  
+```
+#ROS Noetic
+source ~/catkin_ws/devel/setup.bash
 
+#ROS 2 Foxy
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=~/ros2_ws
+source ~/ros2_ws/install/setup.bash
+```
 ### ROS Noetic
 Clone this repository (noetic-devel branch)
 ```
@@ -49,13 +58,6 @@ Clone this repository (foxy-devel branch)
 ```
 cd ~/ros2_ws/src
 git clone -b foxy-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
-```
-Add in ~/.bashrc  
-```
-source /opt/ros/foxy/setup.bash
-source /usr/share/colcon_cd/function/colcon_cd.sh
-export _colcon_cd_root=~/ros2_ws
-source ~/ros2_ws/install/setup.bash
 ```
 The following script will install depthai-core and update usb rules and install depthai devices
 ```
