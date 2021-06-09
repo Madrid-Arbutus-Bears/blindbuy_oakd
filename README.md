@@ -18,16 +18,6 @@ Recommended to install terminator:
 ```
 sudo apt-get install -y terminator
 ```
-Add in ~/.bashrc  
-```
-#ROS Noetic
-source ~/catkin_ws/devel/setup.bash
-
-#ROS 2 Foxy
-source /usr/share/colcon_cd/function/colcon_cd.sh
-export _colcon_cd_root=~/ros2_ws
-source ~/ros2_ws/install/setup.bash
-```
 ### ROS Noetic
 #### Clone repository
 Clone noetic-devel branch:
