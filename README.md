@@ -11,6 +11,11 @@ sudo apt install python3-rosdep
 sudo rosdep init
 rosdep update
 ```
+Recommended to install terminator:
+```
+sudo apt-get install -y terminator
+```
+
 ### ROS Noetic
 Clone this repository (noetic-devel branch)
 ```
