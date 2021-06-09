@@ -29,7 +29,8 @@ export _colcon_cd_root=~/ros2_ws
 source ~/ros2_ws/install/setup.bash
 ```
 ### ROS Noetic
-Clone this repository (noetic-devel branch)
+#### Clone repository
+Clone noetic-devel branch:
 ```
 cd ~/catkin_ws/src
 git clone -b noetic-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
@@ -39,6 +40,7 @@ Add in ~/.bashrc
 source /opt/ros/noetic/setup.bash
 source ~/catkin_ws/devel/setup.bash
 ```
+#### Install depthai
 The following script will install depthai-core and update usb rules and install depthai devices
 
 ```
@@ -56,12 +58,14 @@ catkin_make
 ```
 sudo apt-get install ros-noetic-jsk-visualization
 ```
-### ROS Foxy
-Clone this repository (foxy-devel branch)
+### ROS 2 Foxy
+#### Clone repository
+Clone foxy-devel branch:
 ```
 cd ~/ros2_ws/src
 git clone -b foxy-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
 ```
+#### Install depthai
 The following script will install depthai-core and update usb rules and install depthai devices
 ```
 sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/install_dependencies.sh | sudo bash
