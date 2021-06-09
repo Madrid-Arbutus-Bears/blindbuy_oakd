@@ -12,6 +12,11 @@ sudo rosdep init
 rosdep update
 ```
 ### ROS Noetic
+Clone this repository (noetic-devel branch)
+```
+cd ~/catkin_ws/src
+git clone -b noetic-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
+```
 Add in ~/.bashrc     
 ```
 source /opt/ros/noetic/setup.bash
