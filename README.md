@@ -1,3 +1,3 @@
-# ROS 2 Foxy - blindbuy_oakd
+# ROS Noetic - blindbuy_oakd
 
 Installing instructions in main branch
