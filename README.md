@@ -25,11 +25,6 @@ Clone noetic-devel branch:
 cd ~/catkin_ws/src
 git clone -b noetic-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
 ```
-Add in ~/.bashrc     
-```
-source /opt/ros/noetic/setup.bash
-source ~/catkin_ws/devel/setup.bash
-```
 #### Install depthai
 The following script will install depthai-core and update usb rules and install depthai devices
 
