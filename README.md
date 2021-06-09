@@ -40,6 +40,11 @@ catkin_make
 sudo apt-get install ros-noetic-jsk-visualization
 ```
 ### ROS Foxy
+Clone this repository (foxy-devel branch)
+```
+cd ~/catkin_ws/src
+git clone -b foxy-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
+```
 Add in ~/.bashrc  
 ```
 source /opt/ros/foxy/setup.bash
