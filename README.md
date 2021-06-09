@@ -11,6 +11,9 @@ sudo apt install python3-rosdep
 sudo rosdep init
 rosdep update
 ```
+```
+sudo apt-get install -y ros-foxy-ros1-bridge
+```
 Recommended to install terminator:
 ```
 sudo apt-get install -y terminator
