@@ -98,6 +98,22 @@ for sysdevpath in $(find /sys/bus/usb/devices/usb*/ -name dev); do
     )
 done
 ```
-    sudo chmod 666 /dev/ttyUSB0
-    
+```
+sudo chmod 666 /dev/ttyUSB0
+```
+## Launch
+Source ROS 2 Foxy:
+```
+source /opt/ros/foxy/setup.bash
+```
+Source ROS Noetic:
+```
+source /opt/ros/noetic/setup.bash
+```
+Source ROS Bridge:
+```
+source /opt/ros/noetic/setup.bash
+source /opt/ros/foxy/setup.bash
+```
+
 
