@@ -102,7 +102,7 @@ source /opt/ros/foxy/setup.bash
 ```
 Run:
 ```
-ros2 run ros1_bridge dynamic_bridge
+ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
 ```
 ### ROS Noetic
 Source:
