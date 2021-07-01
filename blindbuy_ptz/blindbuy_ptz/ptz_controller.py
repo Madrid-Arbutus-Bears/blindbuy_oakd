@@ -5,7 +5,7 @@ import serial
 import serial.rs485
 import time
 
-ser = serial.Serial('com3', 9600)
+ser = serial.Serial('/dev/ttyUSB0', 9600)
 ser.rs485_mode = serial.rs485.RS485Settings(rts_level_for_tx=True, rts_level_for_rx=False, loopback=False,
                                             delay_before_tx=None, delay_before_rx=None,)
 
