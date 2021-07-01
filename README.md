@@ -93,6 +93,9 @@ done
 ```
 sudo chmod 666 /dev/ttyUSB0
 ```
+```
+dmesg
+```
 ## Launch
 ### ROS Bridge
 Source:
