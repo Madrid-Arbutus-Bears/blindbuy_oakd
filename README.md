@@ -22,17 +22,17 @@ sudo apt-get install -y terminator
 #### Clone repository
 Clone noetic-devel branch:
 ```
-cd ~/catkin_ws/src
+mkdir -p ~/catkin_ws/src
 git clone -b noetic-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
 ```
 #### Install depthai
 The following script will install depthai-core and update usb rules and install depthai devices
 
 ```
+cd ~/catkin_ws/src
 sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/noetic-devel/install_dependencies.sh | sudo bash
 ```
 ```
-mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws
 wget https://raw.githubusercontent.com/luxonis/depthai-ros/noetic-devel/underlay.repos
 vcs import src < underlay.repos
@@ -47,16 +47,16 @@ sudo apt-get install ros-noetic-jsk-visualization
 #### Clone repository
 Clone foxy-devel branch:
 ```
-cd ~/ros2_ws/src
+mkdir -p ~/ros2_ws/src
 git clone -b foxy-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
 ```
 #### Install depthai
 The following script will install depthai-core and update usb rules and install depthai devices
 ```
+cd ~/ros2_ws/src
 sudo wget -qO- https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/install_dependencies.sh | sudo bash
 ```
 ```
-mkdir -p ~/ros2_ws/src
 cd  ~/ros2_ws
 wget https://raw.githubusercontent.com/luxonis/depthai-ros/foxy-devel/underlay.repos
 vcs import src < underlay.repos
