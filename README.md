@@ -23,6 +23,7 @@ sudo apt-get install -y terminator
 Clone noetic-devel branch:
 ```
 mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/src
 git clone -b noetic-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
 ```
 #### Install depthai
@@ -48,6 +49,7 @@ sudo apt-get install ros-noetic-jsk-visualization
 Clone foxy-devel branch:
 ```
 mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
 git clone -b foxy-devel --recursive https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd.git
 ```
 #### Install depthai
