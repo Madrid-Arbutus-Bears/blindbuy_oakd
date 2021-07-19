@@ -16,11 +16,11 @@ import time
 import sensor_msgs.msg
 from cv_bridge import CvBridge
 
-class StatePublisher(Node):
+class FaceDetection(Node):
 
     def __init__(self):
         rclpy.init()
-        super().__init__('state_publisher')
+        super().__init__('face_detection')
         qos_profile = QoSProfile(depth=10)
         self.broadcaster = TransformBroadcaster(self, qos=qos_profile)
         #Image publisher
@@ -29,7 +29,7 @@ class StatePublisher(Node):
         
         # Transform declaration
         self.transform = TransformStamped()
-        self.transform.header.frame_id = 'oakd'
+        self.transform.header.frame_id = 'oak-d_frame'
         self.transform.child_frame_id = 'head'
 
         # Detect face
@@ -40,9 +40,6 @@ class StatePublisher(Node):
         model_file_name='face-detection-retail-0004_openvino_2021.2_4shave.blob'
         nnPath = os.path.join(get_package_share_directory('blindbuy_oakd'), model_file_name)
         print(nnPath)
-
-        if len(sys.argv) > 1:
-            nnPath = sys.argv[1]
 
         # Start defining a pipeline
         self.pipeline = dai.Pipeline()
@@ -193,9 +190,9 @@ class StatePublisher(Node):
 
                 cvb = CvBridge()
                 cv2.putText(rectifiedRight, "NN fps: {:.2f}".format(fps), (2, rectifiedRight.shape[0] - 4), cv2.FONT_HERSHEY_TRIPLEX, 0.4, color)
-                #cv2.imshow("depth", depthFrameColor)
+                cv2.imshow("depth", depthFrameColor)
                 #self.pub_depth_img.publish(cvb.cv2_to_imgmsg(depthFrameColor))
-                #cv2.imshow("rectified right", rectifiedRight)
+                cv2.imshow("rectified right", rectifiedRight)
                 #self.pub_rectified_img.publish(cvb.cv2_to_imgmsg(rectifiedRight))
 
                 if cv2.waitKey(1) == ord('q'):
@@ -213,7 +210,7 @@ class StatePublisher(Node):
         self.broadcaster.sendTransform(self.transform)
 
 def main():
-    node = StatePublisher()
+    node = FaceDetection()
 
 
 if __name__ == '__main__':
