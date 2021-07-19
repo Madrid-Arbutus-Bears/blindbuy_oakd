@@ -37,7 +37,6 @@
   <joint name="laser_joint" type="fixed">
     <parent link="base_link" />
     <child link="laser" />
-    <!-- <origin rpy="0 0 0" xyz="0.35 0 0.37" /> -->
     <origin rpy="0 0 -1.57079" xyz="0.35 0 0.37" />
   </joint>
 
