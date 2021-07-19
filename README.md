@@ -13,6 +13,6 @@ python3 -m pip install depthai
 ```
 Install pip requirements:
 ```
-cd depthai-python/examples
+cd blindbuy_oakd/depthai-python/examples
 python3 install_requirements.py
 ```
