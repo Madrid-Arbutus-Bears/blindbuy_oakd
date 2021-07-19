@@ -1,0 +1,3 @@
+[submodule "depthai-python"]
+	path = depthai-python
+	url = https://github.com/luxonis/depthai-python
