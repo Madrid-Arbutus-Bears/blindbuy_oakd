@@ -19,7 +19,7 @@ Clone repository:
 ```
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
-git clone python-api https://github.com/DaniGarciaLopez/blindbuy_oakd.git --recursive
+git clone -b python-api https://github.com/DaniGarciaLopez/blindbuy_oakd.git --recursive
 ```
 [Official installation guide](https://docs.luxonis.com/projects/api/en/latest/install/):
 ```
