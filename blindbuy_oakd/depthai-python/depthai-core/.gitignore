@@ -1,0 +1,26 @@
+# Microsoft Visual Studio Code
+.project
+.vscode/
+.vs/
+build*/*
+# Auto-generated
+shared/version.hpp
+
+#pybind11
+build/
+dist/
+_build/
+_generate/
+*.so
+*.py[cod]
+*.egg-info
+
+#depthai-cpp
+depthai-cpp/.vscode/
+depthai-cpp/build/
+
+#ci
+wheelhouse/
+
+#git
+*.orig
