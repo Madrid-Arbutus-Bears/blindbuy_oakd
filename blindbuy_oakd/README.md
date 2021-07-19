@@ -1,18 +1,44 @@
 # blindbuy_oakd
 
-## Installation
+## Installation (tested on Ubuntu 20.04 - ROS 2 Foxy)
+
+[Install ROS2 Foxy](https://docs.ros.org/en/foxy/Installation/Linux-Install-Debians.html)
+
+Don't forget to install colcon:
+```
+sudo apt install python3-colcon-common-extensions
+```
+Add following lines in ~/.bashrc:
+```
+source /opt/ros/foxy/setup.bash
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=~/ros2_ws
+source ~/ros2_ws/install/setup.bash
+```
 Clone repository:
 ```
-cd ros2_ws/src
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
 git clone python-api https://github.com/DaniGarciaLopez/blindbuy_oakd.git --recursive
 ```
-Follow [official installation guide](https://docs.luxonis.com/projects/api/en/latest/install/):
+[Official installation guide](https://docs.luxonis.com/projects/api/en/latest/install/):
 ```
 sudo wget -qO- http://docs.luxonis.com/_static/install_dependencies.sh | bash
 python3 -m pip install depthai
 ```
 Install pip requirements:
 ```
-cd blindbuy_oakd/depthai-python/examples
+cd ~/ros2_ws/src/blindbuy_oakd/depthai-python/examples
 python3 install_requirements.py
+```
+
+Build:
+```
+cd ~/ros2_ws/
+colcon build
+```
+
+## How to start
+```
+ros2 launch blindbuy_oakd demo.launch.py
 ```
