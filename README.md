@@ -4,7 +4,7 @@
 Clone repository:
 ```
 cd ros2_ws/src
-git clone https://github.com/DaniGarciaLopez/blindbuy_oakd.git --recursive
+git clone python-api https://github.com/DaniGarciaLopez/blindbuy_oakd.git --recursive
 ```
 Follow [official installation guide](https://docs.luxonis.com/projects/api/en/latest/install/):
 ```
@@ -13,6 +13,6 @@ python3 -m pip install depthai
 ```
 Install pip requirements:
 ```
-cd depthai-python/examples
+cd blindbuy_oakd/depthai-python/examples
 python3 install_requirements.py
 ```
