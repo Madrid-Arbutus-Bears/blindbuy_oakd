@@ -184,7 +184,7 @@ class FaceDetection(Node):
                     cv2.putText(rectifiedRight, f"Y: {int(y)} mm", (x1 + 10, y1 + 65), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color)
                     cv2.putText(rectifiedRight, f"Z: {int(z)} mm", (x1 + 10, y1 + 80), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color)
 
-                    self.publish_transform((float(x)/1000,float(y)/1000,float(z)/1000)) #Publish transform in meters
+                    self.publish_transform((float(-x)/1000,float(y)/1000,float(z)/1000)) #Publish transform in meters
 
                     cv2.rectangle(rectifiedRight, (x1, y1), (x2, y2), color, cv2.FONT_HERSHEY_SIMPLEX)
 
