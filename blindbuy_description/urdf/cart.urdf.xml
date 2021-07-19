@@ -1,0 +1,52 @@
+<robot name="cart">
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://blindbuy_description/meshes/cart.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="laser">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04" />
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="oak-d_frame">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.11 0.053 0.035"/>
+      </geometry>
+      <material name="Black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- PI=3.14159 PI/2=1.57079 -->
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="laser" />
+    <!-- <origin rpy="0 0 0" xyz="0.35 0 0.37" /> -->
+    <origin rpy="0 0 -1.57079" xyz="0.35 0 0.37" />
+  </joint>
+
+  <joint name="oak-d_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="oak-d_frame" />
+    <origin rpy="-1.57079 -3.14159 1.57079" xyz="0.35 0 1.2" />
+  </joint>
+
+</robot>
+
+

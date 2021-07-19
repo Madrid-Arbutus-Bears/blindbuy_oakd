@@ -54,13 +54,14 @@ def generate_launch_description():
                 'robot_description': urdf,
             }],
         ),
-
         Node(
             package='blindbuy_oakd',
-            executable='state_publisher',
-            name='state_publisher',
-            output='screen'),
-        
+            executable='face_detection',
+            name='face_detection',
+            output='screen',
+            parameters=[{}],
+        ),
+
         Node(
             package='rviz2',
             executable='rviz2',

@@ -193,9 +193,9 @@ class StatePublisher(Node):
 
                 cvb = CvBridge()
                 cv2.putText(rectifiedRight, "NN fps: {:.2f}".format(fps), (2, rectifiedRight.shape[0] - 4), cv2.FONT_HERSHEY_TRIPLEX, 0.4, color)
-                cv2.imshow("depth", depthFrameColor)
+                #cv2.imshow("depth", depthFrameColor)
                 #self.pub_depth_img.publish(cvb.cv2_to_imgmsg(depthFrameColor))
-                cv2.imshow("rectified right", rectifiedRight)
+                #cv2.imshow("rectified right", rectifiedRight)
                 #self.pub_rectified_img.publish(cvb.cv2_to_imgmsg(rectifiedRight))
 
                 if cv2.waitKey(1) == ord('q'):
