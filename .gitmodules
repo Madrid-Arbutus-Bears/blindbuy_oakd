@@ -1,0 +1,3 @@
+[submodule "blindbuy_oakd/depthai-python"]
+	path = blindbuy_oakd/depthai-python
+	url = https://github.com/luxonis/depthai-python
