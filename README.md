@@ -28,7 +28,7 @@ python3 -m pip install depthai
 ```
 Install pip requirements:
 ```
-cd ~/ros2_ws/src/blindbuy_oakd/blindbuy_oakd/depthai-python/examples
+cd ~/ros2_ws/src/blindbuy_oakd/depthai-python/examples
 python3 install_requirements.py
 ```
 
