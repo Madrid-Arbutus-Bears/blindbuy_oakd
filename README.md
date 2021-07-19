@@ -45,6 +45,9 @@ catkin_make
 sudo apt-get install ros-noetic-jsk-visualization
 ```
 ### ROS 2 Foxy
+```
+sudo apt install ros-foxy-image-pipeline
+```
 #### Clone repository
 Clone foxy-devel branch:
 ```
