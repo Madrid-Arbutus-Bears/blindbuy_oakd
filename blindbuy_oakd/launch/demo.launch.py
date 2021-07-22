@@ -33,10 +33,10 @@ def generate_launch_description():
 
     print("urdf_file_name : {}".format(urdf_file_name))
 
-    urdf_path = os.path.join(get_package_share_directory('blindbuy_description'),urdf_file_name)
+    urdf_path = os.path.join(get_package_share_directory('blindbuy_description'),'urdf',urdf_file_name)
     urdf = open(urdf_path).read()    
     
-    rviz = os.path.join(get_package_share_directory('blindbuy_oakd'),rviz_file_name)
+    rviz = os.path.join(get_package_share_directory('blindbuy_oakd'),'rviz',rviz_file_name)
 
     return LaunchDescription([
         DeclareLaunchArgument(

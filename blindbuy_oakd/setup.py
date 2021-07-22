@@ -14,9 +14,12 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
          # Include all launch files
-        (os.path.join('share', package_name), glob('launch/*.py')),
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
         # Include rviz files
-        (os.path.join('share', package_name), glob('rviz/*rviz')),
+        (os.path.join('share', package_name, 'rviz'), glob('rviz/*rviz')),
+        # Include urdf
+        (os.path.join('share', package_name, 'urdf'), glob('urdf/*urdf')),
+        (os.path.join('share', package_name, 'urdf', 'models'), glob('urdf/models/*dae')),
         # Include models files
         (os.path.join('share', package_name), glob('models/*blob')),
     ],
