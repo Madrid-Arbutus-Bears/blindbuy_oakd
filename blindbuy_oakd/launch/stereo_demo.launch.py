@@ -29,11 +29,14 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     urdf_file_name = 'cart.urdf.xml'
+    rviz_file_name = 'stereo_demo.rviz'
 
     print("urdf_file_name : {}".format(urdf_file_name))
 
     urdf_path = os.path.join(get_package_share_directory('blindbuy_description'),'urdf',urdf_file_name)
     urdf = open(urdf_path).read()    
+    
+    rviz = os.path.join(get_package_share_directory('blindbuy_oakd'),'rviz',rviz_file_name)
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -41,7 +44,7 @@ def generate_launch_description():
             default_value='false',
             description='Use simulation (Gazebo) clock if true'),
 
-       Node(
+        Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
             name='robot_state_publisher',
@@ -51,4 +54,17 @@ def generate_launch_description():
                 'robot_description': urdf,
             }],
         ),
+        Node(
+            package='depthai_examples',
+            executable='stereo_node',
+            name='stereo_node',
+            output='screen',
+            parameters=[{}],
+        ),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            output='screen',
+            arguments=['-d', rviz]),
     ])
