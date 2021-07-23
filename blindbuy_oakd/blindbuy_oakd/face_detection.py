@@ -25,7 +25,7 @@ class FaceDetection(Node):
         self.broadcaster = TransformBroadcaster(self, qos=qos_profile)
         #Image publisher
         #self.pub_depth_img = self.create_publisher(sensor_msgs.msg.Image, "/depth_img", 10)
-        #self.pub_rectified_img = self.create_publisher(sensor_msgs.msg.Image, "/rectified_img", 10)
+        self.pub_rectified_img = self.create_publisher(sensor_msgs.msg.Image, "/rectified_img", 10)
         
         # Transform declaration
         self.transform = TransformStamped()
@@ -190,10 +190,16 @@ class FaceDetection(Node):
 
                 cvb = CvBridge()
                 cv2.putText(rectifiedRight, "NN fps: {:.2f}".format(fps), (2, rectifiedRight.shape[0] - 4), cv2.FONT_HERSHEY_TRIPLEX, 0.4, color)
-                cv2.imshow("depth", depthFrameColor)
+                #cv2.imshow("depth", depthFrameColor)
                 #self.pub_depth_img.publish(cvb.cv2_to_imgmsg(depthFrameColor))
                 #cv2.imshow("rectified right", rectifiedRight)
-                #self.pub_rectified_img.publish(cvb.cv2_to_imgmsg(rectifiedRight))
+                frame=rectifiedRight
+                stamp = self.get_clock().now()
+                image_msg = cvb.cv2_to_imgmsg(frame, encoding='bgr8')
+                image_msg.header.stamp = stamp.to_msg()
+                image_msg.header.frame_id = 'oak-d_frame'
+
+                self.pub_rectified_img.publish(image_msg)
 
                 if cv2.waitKey(1) == ord('q'):
                     break

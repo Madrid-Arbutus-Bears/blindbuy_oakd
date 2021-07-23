@@ -16,12 +16,14 @@ setup(
          # Include all launch files
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
         # Include rviz files
-        (os.path.join('share', package_name, 'rviz'), glob('rviz/*rviz')),
+        (os.path.join('share', package_name, 'rviz'), glob('rviz/*.rviz')),
         # Include urdf
-        (os.path.join('share', package_name, 'urdf'), glob('urdf/*urdf')),
-        (os.path.join('share', package_name, 'urdf', 'models'), glob('urdf/models/*dae')),
+        (os.path.join('share', package_name, 'urdf'), glob('urdf/*.urdf')),
+        (os.path.join('share', package_name, 'urdf', 'models'), glob('urdf/models/*.dae')),
         # Include models files
-        (os.path.join('share', package_name, 'models'), glob('models/*blob')),
+        (os.path.join('share', package_name, 'models'), glob('models/*.blob')),
+        # Include meshes files
+        (os.path.join('share', package_name, 'meshes'), glob('meshes/*.dae')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -33,6 +35,7 @@ setup(
     entry_points={
         'console_scripts': [
             'face_detection = ' + package_name + '.face_detection:main',
+            'body_marker_publisher = ' + package_name + '.body_marker_publisher:main',
         ],
     },
 )
