@@ -21,7 +21,7 @@ setup(
         (os.path.join('share', package_name, 'urdf'), glob('urdf/*urdf')),
         (os.path.join('share', package_name, 'urdf', 'models'), glob('urdf/models/*dae')),
         # Include models files
-        (os.path.join('share', package_name), glob('models/*blob')),
+        (os.path.join('share', package_name, 'models'), glob('models/*blob')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
