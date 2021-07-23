@@ -7,9 +7,6 @@
       <geometry>
         <mesh filename="package://blindbuy_description/meshes/cart.dae"/>
       </geometry>
-      <material name="White">
-        <color rgba="1 1 1 1"/>
-      </material>
     </visual>
   </link>
 
@@ -17,11 +14,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.1" radius="0.1" />
+        <mesh filename="package://blindbuy_description/meshes/rplidar.dae" scale="0.01 0.01 0.01"/>
       </geometry>
-      <material name="Black">
-        <color rgba="0 0 0 1"/>
-      </material>
     </visual>
   </link>
 
@@ -31,7 +25,8 @@
   <joint name="laser_joint" type="fixed">
     <parent link="base_link" />
     <child link="laser" />
-    <origin rpy="0 0 -1.5708" xyz="0.3 0 0.43" />
+    <!-- <origin rpy="0 0 0" xyz="0.3 0 0.41" /> -->
+    <origin rpy="3.1416 0 0" xyz="0.3 0 0.41" />
   </joint>
 
   <!-- OAK-D frames -->
