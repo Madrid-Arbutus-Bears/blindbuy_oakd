@@ -115,7 +115,7 @@ def create_pipeline():
     # NeuralNetwork
     print("Creating Face Detection Neural Network...")
     face_nn = pipeline.createNeuralNetwork()
-    face_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), "face-detection-retail-0004_openvino_2021.2_4shave.blob"))
+    face_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), 'models', "face-detection-retail-0004_openvino_2021.2_4shave.blob"))
 
     if camera:
         cam.preview.link(face_nn.input)
@@ -131,7 +131,7 @@ def create_pipeline():
     # NeuralNetwork
     print("Creating Landmarks Detection Neural Network...")
     land_nn = pipeline.createNeuralNetwork()
-    land_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), "landmarks-regression-retail-0009_openvino_2021.2_4shave.blob"))    
+    land_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), 'models', "landmarks-regression-retail-0009_openvino_2021.2_4shave.blob"))    
     land_nn_xin = pipeline.createXLinkIn()
     land_nn_xin.setStreamName("landmark_in")
     land_nn_xin.out.link(land_nn.input)
@@ -142,7 +142,7 @@ def create_pipeline():
     # NeuralNetwork
     print("Creating Head Pose Neural Network...")
     pose_nn = pipeline.createNeuralNetwork()
-    pose_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), "head-pose-estimation-adas-0001_openvino_2021.2_4shave.blob"))
+    pose_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), 'models',"head-pose-estimation-adas-0001_openvino_2021.2_4shave.blob"))
     pose_nn_xin = pipeline.createXLinkIn()
     pose_nn_xin.setStreamName("pose_in")
     pose_nn_xin.out.link(pose_nn.input)
@@ -153,7 +153,7 @@ def create_pipeline():
     # NeuralNetwork
     print("Creating Gaze Estimation Neural Network...")
     gaze_nn = pipeline.createNeuralNetwork()
-    gaze_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), "gaze-estimation-adas-0002_openvino_2021.2_4shave.blob"))
+    gaze_nn.setBlobPath(os.path.join(get_package_share_directory('blindbuy_oakd'), 'models',"gaze-estimation-adas-0002_openvino_2021.2_4shave.blob"))
     gaze_nn_xin = pipeline.createXLinkIn()
     gaze_nn_xin.setStreamName("gaze_in")
     gaze_nn_xin.out.link(gaze_nn.input)

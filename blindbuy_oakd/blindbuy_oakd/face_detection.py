@@ -37,8 +37,8 @@ class FaceDetection(Node):
         self.flipRectified = True
 
         # Get argument first
-        model_file_name='face-detection-retail-0004_openvino_2021.2_4shave.blob'
-        nnPath = os.path.join(get_package_share_directory('blindbuy_oakd'), model_file_name)
+        model_filename='face-detection-retail-0004_openvino_2021.2_4shave.blob'
+        nnPath = os.path.join(get_package_share_directory('blindbuy_oakd'), 'models', model_filename)
         print(nnPath)
 
         # Start defining a pipeline
