@@ -61,6 +61,13 @@ def generate_launch_description():
             output='screen',
             parameters=[{}],
         ),
+        Node(
+            package='blindbuy_oakd',
+            executable='body_marker_publisher',
+            name='body_marker_publisher',
+            output='screen',
+            parameters=[{}],
+        ),
 
         Node(
             package='rviz2',

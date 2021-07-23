@@ -76,6 +76,7 @@
         <parent link="oak-d_rgb_camera_frame"/>
         <child link="oak-d_rgb_camera_optical_frame"/>
     </joint>
+    
 
 <!-- Left Camera -->
     <link name="oak-d_left_camera_frame" />

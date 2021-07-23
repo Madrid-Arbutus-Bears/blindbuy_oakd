@@ -54,6 +54,8 @@ Visualization Manager:
           Value: true
         laser:
           Value: true
+        map:
+          Value: true
         oak-d_camera_center:
           Value: true
         oak-d_frame:
@@ -70,29 +72,33 @@ Visualization Manager:
           Value: true
         oak-d_right_camera_optical_frame:
           Value: true
+        odom:
+          Value: true
       Marker Scale: 0.25
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        base_link:
-          laser:
-            {}
-          oak-d_frame:
-            head:
-              {}
-            oak-d_camera_center:
-              {}
-            oak-d_left_camera_frame:
-              oak-d_left_camera_optical_frame:
+        map:
+          odom:
+            base_link:
+              laser:
                 {}
-            oak-d_rgb_camera_frame:
-              oak-d_rgb_camera_optical_frame:
-                {}
-            oak-d_right_camera_frame:
-              oak-d_right_camera_optical_frame:
-                {}
+              oak-d_frame:
+                head:
+                  {}
+                oak-d_camera_center:
+                  {}
+                oak-d_left_camera_frame:
+                  oak-d_left_camera_optical_frame:
+                    {}
+                oak-d_rgb_camera_frame:
+                  oak-d_rgb_camera_optical_frame:
+                    {}
+                oak-d_right_camera_frame:
+                  oak-d_right_camera_optical_frame:
+                    {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -175,6 +181,18 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /rectified_img
       Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: 3D Head
+      Namespaces:
+        "": true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /body_marker
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -218,7 +236,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.6007323265075684
+      Distance: 4.0923027992248535
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
