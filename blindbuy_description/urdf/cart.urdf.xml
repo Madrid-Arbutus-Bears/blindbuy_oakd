@@ -7,6 +7,9 @@
       <geometry>
         <mesh filename="package://blindbuy_description/meshes/cart.dae"/>
       </geometry>
+      <material name="White">
+        <color rgba="1 1 1 1"/>
+      </material>
     </visual>
   </link>
 
@@ -28,7 +31,7 @@
   <joint name="laser_joint" type="fixed">
     <parent link="base_link" />
     <child link="laser" />
-    <origin rpy="0 0 -1.5708" xyz="0.35 0 0.37" />
+    <origin rpy="0 0 -1.5708" xyz="0.3 0 0.43" />
   </joint>
 
   <!-- OAK-D frames -->
