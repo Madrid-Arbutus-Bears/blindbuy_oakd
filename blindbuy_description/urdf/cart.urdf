@@ -28,6 +28,14 @@
     </visual>
   </link>
 
+  <link name="al_profile"/>
+
+  <joint name="al_profile_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="al_profile" />
+    <origin xyz="0.37 0 0.45" rpy="0 0 0"/>
+  </joint>
+
   <!-- PTZ frames -->
   <link name="ptz_base">
     <visual>
@@ -39,9 +47,9 @@
   </link>
 
   <joint name="ptz_base_joint" type="fixed">
-    <parent link="base_link" />
+    <parent link="al_profile" />
     <child link="ptz_base" />
-    <origin xyz="0.35 0 1" rpy="0 0 0"/>
+    <origin xyz="0 0 0.5" rpy="0 0 0"/>
   </joint>
 
   <link name="ptz_body">
@@ -82,12 +90,12 @@
   <joint name="oak-d_joint" type="fixed">
     <parent link="ptz_head" />
     <child link="oak-d_frame" />
-    <origin xyz="0 0 0.1" rpy="0 0 0" />
+    <origin xyz="0 0 0.1" rpy="0 0 -1.5708" />
   </joint>
 
   <link name="oak-d_frame"/>
 
-  <!-- device Center -->
+
     <link name="oak-d_camera_center">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -95,7 +103,7 @@
                 <mesh filename="package://blindbuy_description/meshes/BW1098OAK.dae" />
             </geometry>
             <material name="mat">
-                <color rgba="0.8 0.8 0.8 0.8"/>
+                <color rgba="0.8 0.8 0.8 1"/>
             </material>
         </visual>
     </link>
@@ -106,7 +114,7 @@
         <origin xyz="0.0 0.0 0.0" rpy="1.5708 0.0 1.5708" />
     </joint>
 
-<!-- RGB Camera -->
+
     <link name="oak-d_rgb_camera_frame" />
     
     <joint name="oak-d_rgb_camera_joint" type="fixed">
@@ -124,7 +132,7 @@
     </joint>
     
 
-<!-- Left Camera -->
+
     <link name="oak-d_left_camera_frame" />
     
     <joint name="oak-d_left_camera_joint" type="fixed">
@@ -142,7 +150,7 @@
     </joint>
 
     
-<!-- right Camera -->
+
     <link name="oak-d_right_camera_frame" />
     
     <joint name="oak-d_right_camera_joint" type="fixed">
