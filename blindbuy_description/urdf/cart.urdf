@@ -96,78 +96,71 @@
   <link name="oak-d_frame"/>
 
 
-    <link name="oak-d_camera_center">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <mesh filename="package://blindbuy_description/meshes/BW1098OAK.dae" />
-            </geometry>
-            <material name="mat">
-                <color rgba="0.8 0.8 0.8 1"/>
-            </material>
-        </visual>
-    </link>
+  <link name="oak-d_camera_center">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+              <mesh filename="package://blindbuy_description/meshes/BW1098OAK.dae" />
+          </geometry>
+          <material name="mat">
+              <color rgba="0.8 0.8 0.8 1"/>
+          </material>
+      </visual>
+  </link>
 
-    <joint name="oak-d_center_joint" type="fixed">
-        <parent link="oak-d_frame"/>
-        <child link="oak-d_camera_center"/>
-        <origin xyz="0.0 0.0 0.0" rpy="1.5708 0.0 1.5708" />
-    </joint>
+  <joint name="oak-d_center_joint" type="fixed">
+      <parent link="oak-d_frame"/>
+      <child link="oak-d_camera_center"/>
+      <origin xyz="0.0 0.0 0.0" rpy="1.5708 0.0 1.5708" />
+  </joint>
 
-
-    <link name="oak-d_rgb_camera_frame" />
-    
-    <joint name="oak-d_rgb_camera_joint" type="fixed">
-        <parent link="oak-d_frame"/>
-        <child link="oak-d_rgb_camera_frame"/>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-    </joint>
-
-    <link name="oak-d_rgb_camera_optical_frame"/>
-    
-    <joint name="oak-d_rgb_camera_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
-        <parent link="oak-d_rgb_camera_frame"/>
-        <child link="oak-d_rgb_camera_optical_frame"/>
-    </joint>
-    
-
-
-    <link name="oak-d_left_camera_frame" />
-    
-    <joint name="oak-d_left_camera_joint" type="fixed">
-        <parent link="oak-d_frame"/>
-        <child link="oak-d_left_camera_frame"/>
-        <origin xyz="0 0.0375 0" rpy="0 0 0" />
-    </joint>
-
-    <link name="oak-d_left_camera_optical_frame"/>
-    
-    <joint name="oak-d_left_camera_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
-        <parent link="oak-d_left_camera_frame"/>
-        <child link="oak-d_left_camera_optical_frame"/>
-    </joint>
-
-    
-
-    <link name="oak-d_right_camera_frame" />
-    
-    <joint name="oak-d_right_camera_joint" type="fixed">
-        <parent link="oak-d_frame"/>
-        <child link="oak-d_right_camera_frame"/>
-        <origin xyz="0 -0.0375 0" rpy="0 0 0" />
-    </joint>
-
-    <link name="oak-d_right_camera_optical_frame"/>
-    
-    <joint name="oak-d_right_camera_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
-        <parent link="oak-d_right_camera_frame"/>
-        <child link="oak-d_right_camera_optical_frame"/>
-    </joint> 
-
+  <link name="oak-d_rgb_camera_frame" />
   
+  <joint name="oak-d_rgb_camera_joint" type="fixed">
+      <parent link="oak-d_frame"/>
+      <child link="oak-d_rgb_camera_frame"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="oak-d_rgb_camera_optical_frame"/>
+  
+  <joint name="oak-d_rgb_camera_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
+      <parent link="oak-d_rgb_camera_frame"/>
+      <child link="oak-d_rgb_camera_optical_frame"/>
+  </joint>
+
+  <link name="oak-d_left_camera_frame" />
+  
+  <joint name="oak-d_left_camera_joint" type="fixed">
+      <parent link="oak-d_frame"/>
+      <child link="oak-d_left_camera_frame"/>
+      <origin xyz="0 0.0375 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="oak-d_left_camera_optical_frame"/>
+  
+  <joint name="oak-d_left_camera_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
+      <parent link="oak-d_left_camera_frame"/>
+      <child link="oak-d_left_camera_optical_frame"/>
+  </joint>
+
+  <link name="oak-d_right_camera_frame" />
+  
+  <joint name="oak-d_right_camera_joint" type="fixed">
+      <parent link="oak-d_frame"/>
+      <child link="oak-d_right_camera_frame"/>
+      <origin xyz="0 -0.0375 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="oak-d_right_camera_optical_frame"/>
+  
+  <joint name="oak-d_right_camera_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
+      <parent link="oak-d_right_camera_frame"/>
+      <child link="oak-d_right_camera_optical_frame"/>
+  </joint> 
 
 </robot>
 
