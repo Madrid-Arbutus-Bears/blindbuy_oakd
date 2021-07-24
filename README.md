@@ -34,6 +34,7 @@ python3 install_requirements.py
 Install ROS packages:
 ```
 sudo apt install ros-foxy-joint-state-publisher
+sudo apt install ros-foxy-joint-state-publisher-gui
 ```
 
 Build:
