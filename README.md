@@ -47,3 +47,6 @@ colcon build
 ```
 ros2 launch blindbuy_oakd demo.launch.py
 ```
+## Hardware Reference Frame (TF)
+### RPLidar A1
+![image](https://github.com/DaniGarciaLopez/blindbuy/blob/master/blindbuy/data/images/rplidar_a1.png)
