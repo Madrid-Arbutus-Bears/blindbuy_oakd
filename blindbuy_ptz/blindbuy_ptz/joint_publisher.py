@@ -8,18 +8,29 @@ class JointPublisher(Node):
 
     def __init__(self):
         super().__init__('joint_publisher')
-        self.joint_pub = self.create_publisher("joint_states", JointState, 10)
-        timer_period = 0.5  # seconds
+        self.joint_pub = self.create_publisher(JointState, "joint_states", 10)
+        timer_period = 0.01  # 10 Hz
         self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.direction=1
+        self.angle=0.0
 
     def timer_callback(self):
+        if self.angle>=3.14:
+            self.direction=-1
+        if self.angle<=-3.14:
+            self.direction=1
+
         joint_msg=JointState()
-        #joint_msg.header.stamp = self.get_clock().now().to_msg()
-        joint_msg.name[0]='ptz_pan_joint'
-        joint_msg.position[0]=0.5
-        joint_msg.name[1]='ptz_tilt_joint'
-        joint_msg.position[1]=1.0
+        joint_msg.header.stamp = self.get_clock().now().to_msg()
+        joint_msg.name=['ptz_pan_joint','ptz_tilt_joint']
+        joint_msg.position=[self.angle, self.angle/2]
         self.joint_pub.publish(joint_msg)
+
+        if self.direction==1:
+            self.angle+=0.005
+        else:
+            self.angle-=0.005
+        
 
 
 def main(args=None):
