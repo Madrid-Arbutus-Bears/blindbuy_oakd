@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<robot name="cart" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- PI=3.1416 PI/2=1.5708 -->
+
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://blindbuy_description/meshes/cart.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="laser" />
+    <!-- <origin rpy="0 0 0" xyz="0.3 0 0.41" /> -->
+    <origin rpy="3.1416 0 0" xyz="0.3 0 0.41" />
+  </joint>
+
+  <link name="laser">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://blindbuy_description/meshes/rplidar.dae" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- PTZ frames -->
+  <link name="ptz_base">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://blindbuy_description/meshes/ptz_base.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="ptz_base_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="ptz_base" />
+    <origin xyz="0.35 0 1" rpy="0 0 0"/>
+  </joint>
+
+  <link name="ptz_body">
+    <visual>
+      <origin xyz="0 0 -0.013" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://blindbuy_description/meshes/ptz_body.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="ptz_pan_joint" type="revolute">
+    <parent link="ptz_base"/>
+    <child link="ptz_body"/>
+    <origin xyz="0 0 0.013" rpy="0 0 0"/>
+    <limit lower="-3.1416" upper="3.1416" effort="10" velocity="3"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="ptz_head">
+    <visual>
+      <origin xyz="0 0 -0.045" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://blindbuy_description/meshes/ptz_head.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="ptz_tilt_joint" type="revolute">
+    <parent link="ptz_body"/>
+    <child link="ptz_head"/>
+    <origin xyz="0 0 0.035" rpy="0 0 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="10" velocity="3"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <!-- OAK-D frames -->
+  <joint name="oak-d_joint" type="fixed">
+    <parent link="ptz_head" />
+    <child link="oak-d_frame" />
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+  </joint>
+
+  <link name="oak-d_frame"/>
+
+  <!-- device Center -->
+    <link name="oak-d_camera_center">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://blindbuy_description/meshes/BW1098OAK.dae" />
+            </geometry>
+            <material name="mat">
+                <color rgba="0.8 0.8 0.8 0.8"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="oak-d_center_joint" type="fixed">
+        <parent link="oak-d_frame"/>
+        <child link="oak-d_camera_center"/>
+        <origin xyz="0.0 0.0 0.0" rpy="1.5708 0.0 1.5708" />
+    </joint>
+
+<!-- RGB Camera -->
+    <link name="oak-d_rgb_camera_frame" />
+    
+    <joint name="oak-d_rgb_camera_joint" type="fixed">
+        <parent link="oak-d_frame"/>
+        <child link="oak-d_rgb_camera_frame"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="oak-d_rgb_camera_optical_frame"/>
+    
+    <joint name="oak-d_rgb_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
+        <parent link="oak-d_rgb_camera_frame"/>
+        <child link="oak-d_rgb_camera_optical_frame"/>
+    </joint>
+    
+
+<!-- Left Camera -->
+    <link name="oak-d_left_camera_frame" />
+    
+    <joint name="oak-d_left_camera_joint" type="fixed">
+        <parent link="oak-d_frame"/>
+        <child link="oak-d_left_camera_frame"/>
+        <origin xyz="0 0.0375 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="oak-d_left_camera_optical_frame"/>
+    
+    <joint name="oak-d_left_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
+        <parent link="oak-d_left_camera_frame"/>
+        <child link="oak-d_left_camera_optical_frame"/>
+    </joint>
+
+    
+<!-- right Camera -->
+    <link name="oak-d_right_camera_frame" />
+    
+    <joint name="oak-d_right_camera_joint" type="fixed">
+        <parent link="oak-d_frame"/>
+        <child link="oak-d_right_camera_frame"/>
+        <origin xyz="0 -0.0375 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="oak-d_right_camera_optical_frame"/>
+    
+    <joint name="oak-d_right_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.5708 0.0 -1.5708"/>
+        <parent link="oak-d_right_camera_frame"/>
+        <child link="oak-d_right_camera_optical_frame"/>
+    </joint> 
+
+  
+
+</robot>
+
+
