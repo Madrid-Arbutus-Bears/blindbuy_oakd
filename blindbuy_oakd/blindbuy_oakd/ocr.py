@@ -200,8 +200,8 @@ while True:
             cropped_stacked = None
             for idx, rotated_rect in enumerate(rotated_rectangles):
                 # Draw detection crop area on input frame
-                #points = np.int0(cv2.boxPoints(rotated_rect))
-                # cv2.polylines(frame, [points], isClosed=True, color=(255, 0, 0), thickness=1, lineType=cv2.LINE_8)
+                points = np.int0(cv2.boxPoints(rotated_rect))
+                cv2.polylines(frame, [points], isClosed=True, color=(255, 0, 0), thickness=1, lineType=cv2.LINE_8)
 
                 # TODO make it work taking args like in OpenCV:
                 # rr = ((256, 256), (128, 64), 30)
