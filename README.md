@@ -31,6 +31,11 @@ Install pip requirements:
 cd ~/ros2_ws/src/blindbuy_oakd/blindbuy_oakd/depthai-python/examples
 python3 install_requirements.py
 ```
+Install ROS packages:
+```
+sudo apt install ros-foxy-joint-state-publisher
+sudo apt install ros-foxy-joint-state-publisher-gui
+```
 
 Build:
 ```
