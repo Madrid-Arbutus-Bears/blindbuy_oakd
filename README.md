@@ -49,4 +49,6 @@ ros2 launch blindbuy_oakd demo.launch.py
 ```
 ## Hardware Reference Frame (TF)
 ### RPLidar A1
-![image](https://github.com/DaniGarciaLopez/blindbuy/blob/master/blindbuy/data/images/rplidar_a1.png)
+![image](https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd/blob/python-api/blindbuy_oakd/data/images/rplidar_a1.png)
+### OpenAL
+![image](https://github.com/Madrid-Arbutus-Bears/blindbuy_oakd/blob/python-api/blindbuy_oakd/data/images/OpenAL.png)
