@@ -18,7 +18,20 @@ class Stepper:
         self.sensor_pin=sensor_pin
         self.negate_sensor=negate_sensor
         self.reverse=reverse
-        
+        self.actual_position=0
+        self.backsteps=1000 #If sensor is pressed move this steps back
+        self.seq=[
+            [1,0,0,0],
+            [1,1,0,0],
+            [0,1,0,0],
+            [0,1,1,0],
+            [0,0,1,0],
+            [0,0,1,1],
+            [0,0,0,1],
+            [1,0,0,1]
+        ]
+        self.direction=-1 #1:CounterClockwise -1:Clockwise
+            
         #Use board layout to set pin name
         GPIO.setmode(GPIO.BOARD)
 
@@ -27,7 +40,8 @@ class Stepper:
             GPIO.setup(pin, GPIO.OUT)
             GPIO.output(pin, 0)
         
-        GPIO.setup(sensor_pin,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(sensor_pin,GPIO.IN)
+        #GPIO.setup(sensor_pin,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         #Init position stepper
         self.init_position()
     
@@ -38,5 +52,27 @@ class Stepper:
         print('sensorPin: '+str(self.sensor_pin)+' '+str(GPIO.input(self.sensor_pin)))
         print('reverseInit: '+str(self.reverse))
         print('negateSensor: '+str(self.negate_sensor))
+        
+        #Case 2 (sensor clicked):
+        if GPIO.input(self.sensor_pin):
+            for i in range(1,self.backsteps):
+                self.actual_position+=self.direction
+                self.step()
+
+        #Case 1 (move to sensor):
+        while not GPIO.input(self.sensor_pin):
+            self.actual_position-=self.direction
+            self.step()
+
+  
+    def step(self, wait=0.001):
+        for pin in range(4):
+                GPIO.output(self.pins[pin], self.seq[self.actual_position%8][pin])
+        time.sleep(wait)
+    
+    #Shutdown GPIO output to save energy
+    def off(self):
+        for pin in range(4):
+            GPIO.output(self.pins[pin], 0)
 
 stepper=Stepper(stepper_name="pan_motor", pins=[12,16,18,22], sensor_pin=36, negate_sensor=False, reverse=False)
