@@ -35,8 +35,9 @@ def generate_launch_description():
             package='joint_state_publisher_gui',
             executable='joint_state_publisher_gui',
             arguments=[urdf_path],
-            # parameters=[{
-            #     'rate': 30, #30Hz Default:10Hz
-            # }],
+            parameters=[{
+                # 'rate': 30, #30Hz Default:10Hz
+                'zeros': {'ptz_pan': -1.5708} #Modify default position
+            }],
         ),
     ])
