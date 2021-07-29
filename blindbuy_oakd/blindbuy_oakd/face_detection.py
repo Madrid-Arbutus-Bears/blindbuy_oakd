@@ -13,7 +13,8 @@ import depthai as dai
 import numpy as np
 import time
 
-import sensor_msgs.msg
+from sensor_msgs.msg import Image
+from geometry_msgs.msg import PointStamped
 from cv_bridge import CvBridge
 
 class FaceDetection(Node):
@@ -23,13 +24,14 @@ class FaceDetection(Node):
         super().__init__('face_detection')
         qos_profile = QoSProfile(depth=10)
         self.broadcaster = TransformBroadcaster(self, qos=qos_profile)
+        self.pub_point = self.create_publisher(PointStamped, "/head_detection", 10)
         #Image publisher
         #self.pub_depth_img = self.create_publisher(sensor_msgs.msg.Image, "/depth_img", 10)
-        self.pub_rectified_img = self.create_publisher(sensor_msgs.msg.Image, "/rectified_img", 10)
+        self.pub_rectified_img = self.create_publisher(Image, "/rectified_img", 10)
         
         # Transform declaration
         self.transform = TransformStamped()
-        self.transform.header.frame_id = 'oak-d_frame'
+        self.transform.header.frame_id = 'oak-d_camera_center'
         self.transform.child_frame_id = 'head'
 
         # Detect face
@@ -184,7 +186,19 @@ class FaceDetection(Node):
                     cv2.putText(rectifiedRight, f"Y: {int(y)} mm", (x1 + 10, y1 + 65), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color)
                     cv2.putText(rectifiedRight, f"Z: {int(z)} mm", (x1 + 10, y1 + 80), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color)
 
+                    #Publish Transform
                     self.publish_transform((float(-x)/1000,float(y)/1000,float(z)/1000)) #Publish transform in meters
+
+                    #Publish PointStamped
+                    point_msg=PointStamped()
+                    point_msg.point.x=float(x)
+                    point_msg.point.y=float(y)
+                    point_msg.point.z=float(z)
+                    stamp = self.get_clock().now().to_msg()
+                    point_msg.header.stamp = stamp
+                    point_msg.header.frame_id = 'oak-d_frame'
+                
+                    self.pub_point.publish(point_msg)
 
                     cv2.rectangle(rectifiedRight, (x1, y1), (x2, y2), color, cv2.FONT_HERSHEY_SIMPLEX)
 
@@ -194,11 +208,11 @@ class FaceDetection(Node):
                 #self.pub_depth_img.publish(cvb.cv2_to_imgmsg(depthFrameColor))
                 #cv2.imshow("rectified right", rectifiedRight)
                 frame=rectifiedRight
-                stamp = self.get_clock().now()
+                stamp = self.get_clock().now().to_msg()
                 image_msg = cvb.cv2_to_imgmsg(frame, encoding='bgr8')
-                image_msg.header.stamp = stamp.to_msg()
+                image_msg.header.stamp = stamp
                 image_msg.header.frame_id = 'oak-d_frame'
-
+                
                 self.pub_rectified_img.publish(image_msg)
 
                 if cv2.waitKey(1) == ord('q'):
@@ -208,6 +222,9 @@ class FaceDetection(Node):
         # Update transform
         now = self.get_clock().now()
         self.transform.header.stamp = now.to_msg()
+        # self.transform.transform.translation.y = translation[0]
+        # self.transform.transform.translation.z = translation[1]
+        # self.transform.transform.translation.x = translation[2]
         self.transform.transform.translation.x = translation[0]
         self.transform.transform.translation.y = translation[1]
         self.transform.transform.translation.z = translation[2]

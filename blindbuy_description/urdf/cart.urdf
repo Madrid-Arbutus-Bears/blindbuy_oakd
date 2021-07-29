@@ -68,7 +68,7 @@
     </visual>
   </link>
 
-  <joint name="ptz_pan_joint" type="revolute">
+  <joint name="ptz_pan" type="revolute">
     <parent link="ptz_base"/>
     <child link="ptz_body"/>
     <origin xyz="0 0 0.013" rpy="0 0 0"/>
@@ -85,7 +85,7 @@
     </visual>
   </link>
 
-  <joint name="ptz_tilt_joint" type="revolute">
+  <joint name="ptz_tilt" type="revolute">
     <parent link="ptz_body"/>
     <child link="ptz_head"/>
     <origin xyz="0 0 0.035" rpy="0 0 0"/>

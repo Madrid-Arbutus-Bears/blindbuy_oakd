@@ -22,7 +22,7 @@ class JointPublisher(Node):
 
         joint_msg=JointState()
         joint_msg.header.stamp = self.get_clock().now().to_msg()
-        joint_msg.name=['ptz_pan_joint','ptz_tilt_joint']
+        joint_msg.name=['ptz_pan','ptz_tilt']
         joint_msg.position=[self.angle, self.angle/2]
         self.joint_pub.publish(joint_msg)
 
