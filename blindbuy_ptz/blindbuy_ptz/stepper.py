@@ -12,7 +12,7 @@ class Stepper:
 	#sensor_pin: int - the number of the sensor GPIO pin 
 	#negate_sensor: boolean - inverts the sensorinput if true 
 	#reverse: boolean - inverts the initialisation direction
-    def __init__(self,stepper_name,pins,sensor_pin,negate_sensor,reverse):
+    def __init__(self,stepper_name,pins,sensor_pin,negate_sensor,reverse,max):
         self.stepper_name=stepper_name
         self.pins=pins
         self.sensor_pin=sensor_pin
@@ -31,6 +31,8 @@ class Stepper:
             [1,0,0,1]
         ]
         self.direction=-1 #1:CounterClockwise -1:Clockwise
+        self.min=0 #Min is 0 when hit the sensor
+        self.max=max #Max value to turn
             
         #Use board layout to set pin name
         GPIO.setmode(GPIO.BOARD)
@@ -64,15 +66,40 @@ class Stepper:
             self.actual_position-=self.direction
             self.step()
 
-  
+        print('Set home position')
+        self.actual_position=0
+
+    #Set goalposition
+    def set_position(self,position):
+        if position<self.min:
+            position=self.min
+            print('Set position to min: '+str(position))
+        elif position>self.max:
+            position=self.max
+            print('Set position to max: '+str(position))
+        return int(position)
+
+    #Move one step 
     def step(self, wait=0.001):
         for pin in range(4):
                 GPIO.output(self.pins[pin], self.seq[self.actual_position%8][pin])
         time.sleep(wait)
-    
+
+    #updates actualPosition one step towards goalposition and calls the step() method to move
+    def move(self, position):
+        if self.actual_position<self.set_position(position):
+            self.actual_position+=1
+            self.step()
+        elif self.actual_position>self.set_position(position):
+            self.actual_position-=1
+            self.step()
+        
     #Shutdown GPIO output to save energy
     def off(self):
         for pin in range(4):
             GPIO.output(self.pins[pin], 0)
 
-stepper=Stepper(stepper_name="pan_motor", pins=[12,16,18,22], sensor_pin=36, negate_sensor=False, reverse=False)
+stepper=Stepper(stepper_name="pan_motor", pins=[12,16,18,22], sensor_pin=36, negate_sensor=False, reverse=False, max=900)
+
+
+stepper.move(900)
