@@ -1,0 +1,6 @@
+string source_frame #TF frame from where to compute the distance
+geometry_msgs/Point product_position #Point where the product is located in the map
+---
+float32 distance #Distance to the product
+geometry_msgs/Point frame_position #Point where the frame is located in the map
+geometry_msgs/TransformStamped transform #Transform received from the lookup_tranform, usefull to check the time

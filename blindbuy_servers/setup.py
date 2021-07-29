@@ -1,9 +1,6 @@
-import os
-from glob import glob
 from setuptools import setup
-from setuptools import find_packages
 
-package_name = 'blindbuy_ptz'
+package_name = 'blindbuy_servers'
 
 setup(
     name=package_name,
@@ -23,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'joint_publisher = ' + package_name + '.joint_publisher:main',
-            'ptz_publisher = ' + package_name + '.ptz_publisher:main',
+            'product_distance_server = ' + package_name + '.product_distance_server:main',
+            'local_navigation_server = ' + package_name + '.local_navigation_server:main',
 
         ],
     },

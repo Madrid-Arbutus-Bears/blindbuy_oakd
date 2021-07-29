@@ -1,0 +1,4 @@
+#Selected barcode is drawn bigger and in a different color
+string selected_barcode 
+---
+bool success

@@ -59,6 +59,13 @@ def generate_launch_description():
             output='screen',
             parameters=[{}],
         ),
+        Node(
+            package='blindbuy_ptz',
+            executable='ptz_publisher',
+            name='ptz_publisher',
+            output='screen',
+            parameters=[{}],
+        ),
 
         Node(
             package='rviz2',

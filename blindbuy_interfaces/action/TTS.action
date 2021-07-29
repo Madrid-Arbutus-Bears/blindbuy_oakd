@@ -1,0 +1,5 @@
+string text
+---
+float32 duration
+---
+float32 progress

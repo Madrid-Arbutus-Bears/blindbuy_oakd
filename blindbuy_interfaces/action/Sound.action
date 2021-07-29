@@ -1,0 +1,5 @@
+string sound
+---
+float32 duration
+---
+float32 progress
