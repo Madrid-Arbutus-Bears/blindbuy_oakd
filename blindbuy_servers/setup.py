@@ -21,7 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'product_distance_server = ' + package_name + '.product_distance_server:main',
-            'local_navigation_server = ' + package_name + '.local_navigation_server:main',
+            'interactive_product_server = ' + package_name + '.interactive_product_server:main',
 
         ],
     },
