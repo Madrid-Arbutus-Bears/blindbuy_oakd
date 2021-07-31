@@ -31,7 +31,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     pkg_blindbuy_description = get_package_share_directory('blindbuy_description')
-    rviz_file_name = 'demo.rviz'
+    rviz_file_name = 'demo2.rviz'
 
     rviz = os.path.join(get_package_share_directory('blindbuy_oakd'),'rviz',rviz_file_name)
 
@@ -63,6 +63,13 @@ def generate_launch_description():
             package='blindbuy_servers',
             executable='product_distance_server',
             name='product_distance_server',
+            output='screen',
+            parameters=[{}],
+        ),
+         Node(
+            package='blindbuy_servers',
+            executable='interactive_product_server',
+            name='interactive_product_server',
             output='screen',
             parameters=[{}],
         ),
