@@ -37,6 +37,8 @@ setup(
             'face_detection = ' + package_name + '.face_detection:main',
             'body_marker_publisher = ' + package_name + '.body_marker_publisher:main',
             'local_navigation = ' + package_name + '.local_navigation:main',
+            'ocr = ' + package_name + '.ocr',
+            'east = ' + package_name + '.east',
 
         ],
     },

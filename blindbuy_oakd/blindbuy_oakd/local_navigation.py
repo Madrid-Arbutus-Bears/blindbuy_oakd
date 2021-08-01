@@ -78,8 +78,9 @@ class LocalNavigation(Node):
                 self.listener.set_position((result.frame_position.x,result.frame_position.y,result.frame_position.z))
                 #self.listener.set_orientation((0,0,-1,0,1,0)) #https://stackoverflow.com/questions/7861306/clarification-on-openal-listener-orientation
                 self.source.set_position((product_position_msg.x, product_position_msg.y, product_position_msg.z))
-                self.source.play()
                 time.sleep(distance/4)
+                self.source.play()
+                
             except Exception as e:
                 self.get_logger().warning('Service call failed %r' % (e,))
 
