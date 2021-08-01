@@ -85,9 +85,6 @@ class InteractiveProductServer(Node):
         # 'commit' changes and send to all clients
         server.applyChanges()
 
-        # rclpy.spin(node)
-        # server.shutdown()
-
     def processFeedback(self, feedback):
         p = feedback.pose.position
         print(f'{feedback.marker_name} is now at {p.x}, {p.y}, {p.z}')
