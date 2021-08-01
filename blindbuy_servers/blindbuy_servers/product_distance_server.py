@@ -15,8 +15,8 @@ import numpy as np
 import rclpy
 from rclpy.node import Node
 
-#ros2 service call /product_distance blindbuy_interfaces/srv/ProductDistance "target_frame: 'head'"
-#ros2 service call /product_distance blindbuy_interfaces/srv/ProductDistance "{target_frame: 'head', product_position: {x: 1.0, y: 0.0, z: 0.0}}"
+#ros2 service call /product_distance blindbuy_interfaces/srv/ProductDistance "source_frame: 'head'"
+#ros2 service call /product_distance blindbuy_interfaces/srv/ProductDistance "{source_frame: 'head', product_position: {x: 1.0, y: 0.0, z: 0.0}}"
 
 class ProductDistanceServer(Node):
 
@@ -35,7 +35,7 @@ class ProductDistanceServer(Node):
 
     def product_distance_callback(self, request, response):
         try:
-            trans = self.tfBuffer.lookup_transform('map', request.source_frame, Time())
+            trans = self.tfBuffer.lookup_transform('base_link', request.source_frame, Time())
 
             #Doing this because TransformStamped return Vector3 instead of Point
             frame_position=Point()
@@ -67,6 +67,7 @@ class ProductDistanceServer(Node):
             response.frame_position=frame_position
             
             return response
+            
         except Exception as ex:
             template = "Error while computing transform. An exception of type {0} occurred: {1!r}"
             message = template.format(type(ex).__name__, ex.args)
