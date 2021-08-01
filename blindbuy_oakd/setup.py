@@ -36,6 +36,8 @@ setup(
         'console_scripts': [
             'face_detection = ' + package_name + '.face_detection:main',
             'body_marker_publisher = ' + package_name + '.body_marker_publisher:main',
+            'local_navigation = ' + package_name + '.local_navigation:main',
+
         ],
     },
 )
