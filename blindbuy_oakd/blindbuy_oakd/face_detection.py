@@ -7,7 +7,6 @@ from tf2_ros import TransformBroadcaster, TransformStamped
 
 from ament_index_python.packages import get_package_share_directory
 import os
-import sys
 import cv2
 import depthai as dai
 import numpy as np
