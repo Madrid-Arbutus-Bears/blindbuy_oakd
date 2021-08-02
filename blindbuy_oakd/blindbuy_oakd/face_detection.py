@@ -144,7 +144,6 @@ class FaceDetection(Node):
                 depthFrameColor = cv2.equalizeHist(depthFrameColor)
                 depthFrameColor = cv2.applyColorMap(depthFrameColor, cv2.COLORMAP_HOT)
                 detections = det.detections
-                print(detections)
                 if len(detections) != 0:
                     boundingBoxMapping = depthRoiMap.get()
                     roiDatas = boundingBoxMapping.getConfigData()
