@@ -13,6 +13,10 @@ import numpy as np
 from imutils.video import FPS
 from math import cos, sin
 
+import rclpy
+from rclpy.qos import QoSProfile
+from tf2_ros import TransformBroadcaster, TransformStamped
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-nd', '--no-debug', action="store_true", help="Prevent debug output")
@@ -31,6 +35,50 @@ if args.camera and args.video:
 elif args.camera is False and args.video is None:
     raise ValueError("Missing inference source! Either use \"-cam\" to run on DepthAI camera or \"-vid <path>\" to run on video file")
 
+
+rclpy.init(args=None)
+
+node = rclpy.create_node('head_orientation')
+
+qos_profile = QoSProfile(depth=10)
+broadcaster = TransformBroadcaster(node, qos=qos_profile)
+
+ # Transform declaration
+transform = TransformStamped()
+transform.header.frame_id = 'oak-d_camera_center'
+transform.child_frame_id = 'head'
+
+def pose_to_quaternion(head_pose):
+    # roll = head_pose[1] * np.pi / 180
+    # pitch = head_pose[2] * np.pi / 180
+    # yaw = head_pose[0] * np.pi / 180
+    roll = -(head_pose[0] * np.pi / 180)
+    pitch = head_pose[2] * np.pi / 180
+    yaw = head_pose[1] * np.pi / 180
+
+    qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+    qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
+    qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
+    qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+
+    return [qx, qy, qz, qw]
+
+def publish_transform(head_pose):
+    # Update transform
+    now = node.get_clock().now()
+    transform.header.stamp = now.to_msg()
+    transform.transform.translation.x = 0.0
+    transform.transform.translation.y = 0.0
+    transform.transform.translation.z = 1.0
+    
+    rotation=pose_to_quaternion(head_pose)
+    transform.transform.rotation.x=rotation[0]
+    transform.transform.rotation.y=rotation[1]
+    transform.transform.rotation.z=rotation[2]
+    transform.transform.rotation.w=rotation[3]
+
+    # Send transform
+    broadcaster.sendTransform(transform)
 
 def draw_3d_axis(image, head_pose, origin, size=50):
     roll = head_pose[0] * np.pi / 180
@@ -353,6 +401,8 @@ class Main:
                     if self.right_bbox is not None:
                         cv2.rectangle(self.debug_frame, (self.right_bbox[0], self.right_bbox[1]), (self.right_bbox[2], self.right_bbox[3]), (245, 10, 10), 2)
                     if self.pose is not None and self.nose is not None:
+                        #Publishing transform to ros tf
+                        publish_transform(self.pose)
                         draw_3d_axis(self.debug_frame, self.pose, self.nose)
     
                 if camera:

@@ -35,11 +35,10 @@ setup(
     entry_points={
         'console_scripts': [
             'face_detection = ' + package_name + '.face_detection:main',
+            'head_orientation = ' + package_name + '.head_orientation',
             'body_marker_publisher = ' + package_name + '.body_marker_publisher:main',
             'local_navigation = ' + package_name + '.local_navigation:main',
             'ocr = ' + package_name + '.ocr',
-            'east = ' + package_name + '.east',
-
         ],
     },
 )

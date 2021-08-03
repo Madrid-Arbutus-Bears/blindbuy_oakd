@@ -47,13 +47,6 @@ def generate_launch_description():
             description='Use simulation (Gazebo) clock if true'),
         Node(
             package='blindbuy_oakd',
-            executable='face_detection',
-            name='face_detection',
-            output='screen',
-            parameters=[{}],
-        ),
-        Node(
-            package='blindbuy_oakd',
             executable='body_marker_publisher',
             name='body_marker_publisher',
             output='screen',
