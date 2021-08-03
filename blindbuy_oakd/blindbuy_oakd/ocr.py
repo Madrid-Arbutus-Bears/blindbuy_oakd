@@ -243,7 +243,7 @@ def four_point_transform(image, pts):
 
 rclpy.init(args=None)
 
-node = rclpy.create_node('minimal_publisher')
+node = rclpy.create_node('ocr')
 
 pub_img = node.create_publisher(Image, "/ocr_img", 10)
 pub_text = node.create_publisher(String, "/ocr_text", 10)
