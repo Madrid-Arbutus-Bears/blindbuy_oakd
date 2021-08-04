@@ -29,7 +29,7 @@ from openal import *
 
 from ament_index_python.packages import get_package_share_directory
 
-
+import numpy as np
 
 class LocalNavigation(Node):
 
@@ -59,8 +59,6 @@ class LocalNavigation(Node):
             product_position_msg.y=self.product_y
             product_position_msg.z=self.product_z
 
-            print(product_position_msg)
-
             req = ProductDistance.Request()
             req.product_position=product_position_msg
             req.source_frame='head'
@@ -76,7 +74,9 @@ class LocalNavigation(Node):
                 result = future.result()
                 distance=result.distance
                 self.listener.set_position((result.frame_position.x,result.frame_position.y,result.frame_position.z))
-                #self.listener.set_orientation((0,0,-1,0,1,0)) #https://stackoverflow.com/questions/7861306/clarification-on-openal-listener-orientation
+                orientation=result.transform.transform.rotation
+                openal_orientation = self.quaternion_to_openal(orientation)
+                self.listener.set_orientation(openal_orientation) #https://stackoverflow.com/questions/7861306/clarification-on-openal-listener-orientation
                 self.source.set_position((product_position_msg.x, product_position_msg.y, product_position_msg.z))
                 time.sleep(distance/4)
                 self.source.play()
@@ -84,15 +84,57 @@ class LocalNavigation(Node):
             except Exception as e:
                 self.get_logger().warning('Service call failed %r' % (e,))
 
+    def quaternion_to_openal(self, orientation):
+        #https://math.stackexchange.com/questions/2618527/converting-from-yaw-pitch-roll-to-vector
+        #https://math.stackexchange.com/questions/2253071/convert-quaternion-to-vector/2253214
+
+        #Calculate 'up vector' from 'at vector'. Perpendicular vector across y axis: https://stackoverflow.com/questions/43507491/imprecision-with-rotation-matrix-to-align-a-vector-to-an-axis
+        at_vector = np.array([orientation.x,  orientation.y,  orientation.z])
+
+        # Compute the rotation matrix
+        R = self.get_rotation_matrix(at_vector, [0.0, 1.0, 0.0])
+
+        # Apply the rotation matrix to the vector
+        up_vector = np.dot(at_vector.T, R.T)     
+
+        openal_orientation=(at_vector[0],at_vector[1],at_vector[2],up_vector[0],up_vector[1],up_vector[2])
+        print(openal_orientation)
+        return openal_orientation
+    
+    def get_rotation_matrix(self, i_v, unit=None):
+        # From http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q38
+        if unit is None:
+            unit = [1.0, 0.0, 0.0]
+        # Normalize vector length
+        i_v /= np.linalg.norm(i_v)
+
+        # Get axis
+        uvw = np.cross(i_v, unit)
+
+        # Compute trig values - no need to go through arccos and back
+        rcos = np.dot(i_v, unit)
+        rsin = np.linalg.norm(uvw)
+
+        #Normalize and unpack axis
+        if not np.isclose(rsin, 0):
+            uvw /= rsin
+        u, v, w = uvw
+
+        # Compute rotation matrix - re-expressed to show structure
+        return (
+            rcos * np.eye(3) +
+            rsin * np.array([
+                [ 0, -w,  v],
+                [ w,  0, -u],
+                [-v,  u,  0]
+            ]) +
+            (1.0 - rcos) * uvw[:,None] * uvw[None,:]
+        )
+    
     def product_position_callback(self, msg):
         self.product_x=msg.point.x
         self.product_y=msg.point.y
         self.product_z=msg.point.z
-
-
-        
-
-
 
 def main(args=None):
     rclpy.init(args=args)
@@ -110,8 +152,5 @@ def main(args=None):
     # release resources (don't forget this)
     oalQuit()
 
-
 if __name__ == '__main__':
     main()
-
-
