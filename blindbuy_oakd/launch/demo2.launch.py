@@ -53,6 +53,13 @@ def generate_launch_description():
             parameters=[{}],
         ),
         Node(
+            package='blindbuy_oakd',
+            executable='local_navigation',
+            name='local_navigation',
+            output='screen',
+            parameters=[{}],
+        ),
+        Node(
             package='blindbuy_servers',
             executable='product_distance_server',
             name='product_distance_server',
