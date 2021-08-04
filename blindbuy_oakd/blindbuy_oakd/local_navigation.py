@@ -3,10 +3,7 @@
 
 import rclpy
 from rclpy.executors import MultiThreadedExecutor
-from rclpy.action import ActionServer
 from rclpy.node import Node
-from rclpy.exceptions import ParameterNotDeclaredException
-from rcl_interfaces.msg import ParameterType
 
 from geometry_msgs.msg import Point, PointStamped
 
@@ -14,15 +11,12 @@ import os
 
 from blindbuy_interfaces.srv import ProductDistance
 
-from rclpy.action import ActionServer, ActionClient
 
 import time
 
-from blindbuy_interfaces.action import LocalNavigation, Sound
+from blindbuy_interfaces.action import LocalNavigation
 
 from blindbuy_interfaces.srv import ProductDistance
-
-from tf2_ros import TransformBroadcaster, TransformListener, TransformStamped, Buffer
 
 # import PyOpenAL (will require an OpenAL shared library)
 from openal import *
