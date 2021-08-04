@@ -37,13 +37,10 @@ class LocalNavigation(Node):
         super().__init__('local_navigation_server')
         self.product_distance_client = self.create_client(ProductDistance, 'product_distance')
         self.product_position_sub = self.create_subscription(PointStamped,'product_position',self.product_position_callback,1)
-        #Timer
-        # timer_period = 0.033  # 30Hz
-        # self.timer = self.create_timer(timer_period, self.timer_callback)
         #Obtain path for Sound file
-        root_path=os.path.join(get_package_share_directory('blindbuy'), 'data/audio')
+        root_path=os.path.join(get_package_share_directory('blindbuy_oakd'), 'data/audio')
         # Set sound properties
-        self.source = oalOpen(os.path.join(root_path,'bounce.wav'))
+        self.source = oalOpen(os.path.join(root_path,'beep.wav'))
         self.source.set_max_distance(5.0)
         self.source.set_position((0,0,0))
         #Declare openal listener
@@ -98,7 +95,7 @@ class LocalNavigation(Node):
         up_vector = np.dot(at_vector.T, R.T)     
 
         openal_orientation=(at_vector[0],at_vector[1],at_vector[2],up_vector[0],up_vector[1],up_vector[2])
-        print(openal_orientation)
+
         return openal_orientation
     
     def get_rotation_matrix(self, i_v, unit=None):

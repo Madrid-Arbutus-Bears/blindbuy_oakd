@@ -20,6 +20,8 @@ setup(
         # Include urdf
         (os.path.join('share', package_name, 'urdf'), glob('urdf/*.urdf')),
         (os.path.join('share', package_name, 'urdf', 'models'), glob('urdf/models/*.dae')),
+        #Include audio files
+        (os.path.join('share', package_name, 'data/audio'), glob('data/audio/*.wav')),
         # Include models files
         (os.path.join('share', package_name, 'models'), glob('models/*.blob')),
         # Include meshes files
