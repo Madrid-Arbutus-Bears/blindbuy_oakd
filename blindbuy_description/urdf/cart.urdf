@@ -76,6 +76,12 @@
     <axis xyz="0 0 1"/>
   </joint>
 
+  <!-- <joint name="ptz_pan" type="fixed">
+    <parent link="ptz_base"/>
+    <child link="ptz_body"/>
+    <origin xyz="0 0 0.013" rpy="0 0 0"/>
+  </joint> -->
+
   <link name="ptz_head">
     <visual>
       <origin xyz="0 0 -0.045" rpy="0 0 0"/>
@@ -92,6 +98,13 @@
     <limit lower="-1.5708" upper="1.5708" effort="10" velocity="3"/>
     <axis xyz="1 0 0"/>
   </joint>
+
+  <!-- <joint name="ptz_tilt" type="fixed">
+    <parent link="ptz_body"/>
+    <child link="ptz_head"/>
+    <origin xyz="0 0 0.035" rpy="0 0 0"/>
+  </joint> -->
+
 
   <!-- OAK-D frames -->
   <joint name="oak-d_joint" type="fixed">

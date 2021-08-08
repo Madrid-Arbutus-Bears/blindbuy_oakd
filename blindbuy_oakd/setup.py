@@ -26,6 +26,8 @@ setup(
         (os.path.join('share', package_name, 'models'), glob('models/*.blob')),
         # Include meshes files
         (os.path.join('share', package_name, 'meshes'), glob('meshes/*.dae')),
+        # Add array files
+        (os.path.join('share', package_name, 'data/array'), glob('data/array/*.npy')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -40,7 +42,8 @@ setup(
             'head_orientation = ' + package_name + '.head_orientation',
             'body_marker_publisher = ' + package_name + '.body_marker_publisher:main',
             'local_navigation = ' + package_name + '.local_navigation:main',
-            'ocr = ' + package_name + '.ocr',
+            'perception_publisher = ' + package_name + '.perception_publisher:main',
+            'ocr_publisher = ' + package_name + '.ocr_publisher',
         ],
     },
 )
