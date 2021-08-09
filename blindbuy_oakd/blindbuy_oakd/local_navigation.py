@@ -50,27 +50,44 @@ class LocalNavigation(Node):
             product_position_msg.y=self.product_y
             product_position_msg.z=self.product_z
 
-            req = ProductDistance.Request()
-            req.product_position=product_position_msg
-            req.source_frame='head'
+
+            #Head Pose Request
+            head_req = ProductDistance.Request()
+            head_req.product_position=product_position_msg
+            head_req.source_frame='head'
 
             while not self.product_distance_client.wait_for_service(timeout_sec=1.0):
-                self.get_logger().info('Product Distance Server not available, waiting again...')
+                self.get_logger().info('Head Pose -> Product Distance Server not available, waiting again...')
 
-            future = self.product_distance_client.call_async(req)
+            head_future = self.product_distance_client.call_async(head_req)
 
-            rclpy.spin_until_future_complete(self, future)
+            rclpy.spin_until_future_complete(self, head_future)
+
+            #Hand Position Request
+            hand_req = ProductDistance.Request()
+            hand_req.product_position=product_position_msg
+            hand_req.source_frame='palm'
+
+            while not self.product_distance_client.wait_for_service(timeout_sec=1.0):
+                self.get_logger().info('Hand Position -> Product Distance Server not available, waiting again...')
+
+            hand_future = self.product_distance_client.call_async(hand_req)
+
+            rclpy.spin_until_future_complete(self, hand_future)
 
             try:
-                result = future.result()
-                distance=result.distance
-                self.listener.set_position((result.frame_position.x,result.frame_position.y,result.frame_position.z))
-                orientation=result.transform.transform.rotation
+                head_result = head_future.result()
+                hand_result = hand_future.result()
+                distance=hand_result.distance #Using the distance from the product to the hand
+                self.listener.set_position((head_result.frame_position.x,head_result.frame_position.y,head_result.frame_position.z))
+                orientation=head_result.transform.transform.rotation
                 openal_orientation = self.quaternion_to_openal(orientation)
                 self.listener.set_orientation(openal_orientation) #https://stackoverflow.com/questions/7861306/clarification-on-openal-listener-orientation
                 self.source.set_position((product_position_msg.x, product_position_msg.y, product_position_msg.z))
-                time.sleep(distance/4)
-                self.source.play()
+                
+                if distance>0.05: #Avoid sound glitch when distance is so small
+                    time.sleep(distance/4)
+                    self.source.play()
                 
             except Exception as e:
                 self.get_logger().warning('Service call failed %r' % (e,))
