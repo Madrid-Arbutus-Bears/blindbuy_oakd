@@ -45,16 +45,10 @@ class ProductDistanceServer(Node):
 
             distance=self.distance(request.product_position, frame_position)
 
-            print(distance)
-            print(request.product_position)
-            print(frame_position)
-
             #Find 3D distance -> https://stackoverflow.com/questions/20184992/finding-3d-distances-using-an-inbuilt-function-in-python
             # p0 = np.array([request.product_position.x,request.product_position.y,0.0])
             # p1 = np.array([trans.transform.translation.x,trans.transform.translation.y,0.0])
             # distance = np.linalg.norm(p0 - p1)
-
-
 
             # distance=math.dist([request.product_position.x,request.product_position.y],[trans.transform.translation.x,trans.transform.translation])
             #distance=math.dist([1,2],[2,3])
