@@ -52,24 +52,11 @@ def generate_launch_description():
             output='screen',
             parameters=[{}],
         ),
-        Node(
-            package='blindbuy_oakd',
-            executable='local_navigation',
-            name='local_navigation',
-            output='screen',
-            parameters=[{}],
-        ),
-        Node(
-            package='blindbuy_servers',
-            executable='product_distance_server',
-            name='product_distance_server',
-            output='screen',
-            parameters=[{}],
-        ),
+
          Node(
-            package='blindbuy_servers',
-            executable='interactive_product_server',
-            name='interactive_product_server',
+            package='blindbuy_oakd',
+            executable='perception_publisher',
+            name='perception_publisher',
             output='screen',
             parameters=[{}],
         ),

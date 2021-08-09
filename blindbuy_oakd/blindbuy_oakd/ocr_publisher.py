@@ -438,13 +438,13 @@ while True:
         if in_det is not None:
             rec_received = 0
             rec_pushed = len(rotated_rectangles)
-            if rec_pushed:
-                print("====== Pushing for recognition, count:", rec_pushed)
+            # if rec_pushed:
+            #     print("====== Pushing for recognition, count:", rec_pushed)
             cropped_stacked = None
             for idx, rotated_rect in enumerate(rotated_rectangles):
                 # Draw detection crop area on input frame
                 points = np.int0(cv2.boxPoints(rotated_rect))
-                cv2.polylines(frame, [points], isClosed=True, color=(255, 0, 0), thickness=1, lineType=cv2.LINE_8)
+                cv2.polylines(frame, [points], isClosed=True, color=(75, 25, 227), thickness=1, lineType=cv2.LINE_8)
 
                 # TODO make it work taking args like in OpenCV:
                 # rr = ((256, 256), (128, 64), 30)

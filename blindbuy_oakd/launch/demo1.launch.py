@@ -31,7 +31,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     pkg_blindbuy_description = get_package_share_directory('blindbuy_description')
-    rviz_file_name = 'demo.rviz'
+    rviz_file_name = 'demo1.rviz'
 
     rviz = os.path.join(get_package_share_directory('blindbuy_oakd'),'rviz',rviz_file_name)
 
@@ -49,13 +49,6 @@ def generate_launch_description():
             package='blindbuy_oakd',
             executable='face_detection',
             name='face_detection',
-            output='screen',
-            parameters=[{}],
-        ),
-        Node(
-            package='blindbuy_oakd',
-            executable='body_marker_publisher',
-            name='body_marker_publisher',
             output='screen',
             parameters=[{}],
         ),

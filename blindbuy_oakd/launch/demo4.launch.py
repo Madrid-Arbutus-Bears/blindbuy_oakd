@@ -31,7 +31,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     pkg_blindbuy_description = get_package_share_directory('blindbuy_description')
-    rviz_file_name = 'demo3.rviz'
+    rviz_file_name = 'demo4.rviz'
 
     rviz = os.path.join(get_package_share_directory('blindbuy_oakd'),'rviz',rviz_file_name)
 
@@ -47,29 +47,15 @@ def generate_launch_description():
             description='Use simulation (Gazebo) clock if true'),
         Node(
             package='blindbuy_oakd',
-            executable='body_marker_publisher',
-            name='body_marker_publisher',
+            executable='ocr_publisher',
+            name='ocr_publisher',
             output='screen',
             parameters=[{}],
         ),
         Node(
             package='blindbuy_oakd',
-            executable='perception_publisher',
-            name='perception_publisher',
-            output='screen',
-            parameters=[{}],
-        ),
-        Node(
-            package='blindbuy_oakd',
-            executable='local_navigation',
-            name='local_navigation',
-            output='screen',
-            parameters=[{}],
-        ),
-        Node(
-            package='blindbuy_servers',
-            executable='interactive_product_server',
-            name='interactive_product_server',
+            executable='ocr_publisher',
+            name='ocr_publisher',
             output='screen',
             parameters=[{}],
         ),

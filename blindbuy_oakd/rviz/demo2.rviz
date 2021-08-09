@@ -72,6 +72,8 @@ Visualization Manager:
           Value: true
         oak-d_right_camera_optical_frame:
           Value: true
+        palm:
+          Value: true
         ptz_base:
           Value: true
         ptz_body:
@@ -92,6 +94,8 @@ Visualization Manager:
                   oak-d_frame:
                     oak-d_camera_center:
                       head:
+                        {}
+                      palm:
                         {}
                     oak-d_left_camera_frame:
                       oak-d_left_camera_optical_frame:
@@ -208,9 +212,10 @@ Visualization Manager:
       Value: true
     - Class: rviz_default_plugins/Marker
       Enabled: true
-      Name: 3D Head
+      Name: 3D Models
       Namespaces:
-        "": true
+        head: true
+        palm: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -270,25 +275,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.0923027992248535
+      Distance: 2.32086443901062
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.2816590964794159
-        Y: -0.16034339368343353
-        Z: 0.7327944040298462
+        X: -0.28116053342819214
+        Y: -0.010972080752253532
+        Z: 0.8576122522354126
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5897961854934692
+      Pitch: 0.2797964811325073
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.501756429672241
+      Yaw: 0.4267570674419403
     Saved: ~
 Window Geometry:
   Displays:
