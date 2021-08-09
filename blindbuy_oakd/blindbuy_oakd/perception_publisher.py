@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # # coding=utf-8
 import math
+from pickle import NONE
 import cv2
 import depthai as dai
 import numpy as np
@@ -422,15 +423,26 @@ def draw_3d_axis(image, head_pose, origin, size=50):
     y3 = size * (cos(yaw) * sin(pitch)) + origin[1]
     cv2.line(image, (origin[0], origin[1]), (int(x3), int(y3)), (255, 0, 0), 2)
 
-def draw_pose_data(debug_frame, head_pose, origin,color):
-    cv2.rectangle(debug_frame, (origin[3]-75, origin[4]), (origin[3]+1, origin[4]+55), color, -1)
-    cv2.putText(debug_frame, f"X: {int(origin[0])} mm", (origin[3]-70, origin[4]+10), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
-    cv2.putText(debug_frame, f"Y: {int(origin[1])} mm", (origin[3]-70, origin[4]+20), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
-    cv2.putText(debug_frame, f"Z: {int(origin[2])} mm", (origin[3]-70, origin[4]+30), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
-    cv2.putText(debug_frame, f"r: {int(head_pose[0])} º", (origin[3]-70, origin[4]+30), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
-    cv2.putText(debug_frame, f"p: {int(head_pose[1])} º", (origin[3]-70, origin[4]+40), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
-    cv2.putText(debug_frame, f"w: {int(head_pose[2])} º", (origin[3]-70, origin[4]+50), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+# def draw_pose_data(debug_frame, head_pose, origin, head_bbox, color):
+#     cv2.rectangle(debug_frame, (origin[3]-75, origin[4]), (origin[3]+1, origin[4]+55), color, -1)
+#     cv2.putText(debug_frame, f"X: {int(origin[0])} mm", (origin[3], origin[4]+10), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+#     cv2.putText(debug_frame, f"Y: {int(origin[1])} mm", (origin[3]-70, origin[4]+20), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+#     cv2.putText(debug_frame, f"Z: {int(origin[2])} mm", (origin[3]-70, origin[4]+30), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+#     cv2.putText(debug_frame, f"r: {int(head_pose[0])} º", (origin[3]-70, origin[4]+30), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+#     cv2.putText(debug_frame, f"p: {int(head_pose[1])} º", (origin[3]-70, origin[4]+40), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+#     cv2.putText(debug_frame, f"w: {int(head_pose[2])} º", (origin[3]-70, origin[4]+50), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
 
+def draw_pose_data(debug_frame, head_pose, origin, head_bbox, color):
+    if head_bbox is not None:
+        y_dist=60
+        x_dist=int(head_bbox[0]+((head_bbox[2]-head_bbox[0])/2))
+        cv2.rectangle(debug_frame, (head_bbox[0], head_bbox[3]+y_dist), (head_bbox[2], head_bbox[3]+y_dist+40), color, -1)
+        cv2.putText(debug_frame, f"X: {int(origin[0])} mm", (x_dist-50, head_bbox[3]+y_dist+10), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+        cv2.putText(debug_frame, f"Y: {int(origin[1])} mm", (x_dist-50, head_bbox[3]+y_dist+20), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+        cv2.putText(debug_frame, f"Z: {int(origin[2])} mm", (x_dist-50, head_bbox[3]+y_dist+30), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+        cv2.putText(debug_frame, f"r: {int(head_pose[0])}", (x_dist+20, head_bbox[3]+y_dist+10), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+        cv2.putText(debug_frame, f"p: {int(head_pose[1])}", (x_dist+20, head_bbox[3]+y_dist+20), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
+        cv2.putText(debug_frame, f"w: {int(head_pose[2])}", (x_dist+20, head_bbox[3]+y_dist+30), cv2.FONT_HERSHEY_DUPLEX, 0.3, (175,175,175))
 
 class PerceptionPublisher(Node):
 
@@ -536,6 +548,7 @@ class PerceptionPublisher(Node):
 
 
                 in_face = faceQ.tryGet()
+                head_bbox=None
                 if in_face is not None and frame is not None and depthFrame is not None:
                     
                     bboxes = bbox_face_extraction(in_face)
@@ -550,6 +563,7 @@ class PerceptionPublisher(Node):
                         pose_inQ.send(pose_data)
 
                         draw_bbox(debug_frame,bbox,color)
+                        head_bbox=bbox
                         head_loc = calc_spatials(bbox,depthFrame,RED_RATIO_FACE,filter="median")
 
                 palm_in = palmQ.tryGet()
@@ -565,15 +579,6 @@ class PerceptionPublisher(Node):
                     if spatialCoords is not None:
                         self.publish_palm_transform(spatialCoords)
 
-                    #publish detection image
-                    cvb = CvBridge()
-                    stamp = self.get_clock().now().to_msg()
-                    image_msg = cvb.cv2_to_imgmsg(debug_frame, encoding='bgr8')
-                    image_msg.header.stamp = stamp
-                    image_msg.header.frame_id = 'oak-d_frame'
-                    
-                    self.pub_rectified_img.publish(image_msg)
-
                     ###### IMSHOW FOR DEPTH AND FRAME
                     #cv2.imshow("debug", debug_frame)
                     #show_depth(depthFrame)
@@ -584,9 +589,18 @@ class PerceptionPublisher(Node):
                     pose = [val[0][0] for val in to_tensor_result(head_or).values()]
                     if head_loc[2] is not np.nan:
                         self.publish_head_transform(head_loc,pose)
-                        print("Loc:({0},{1},{2}) , Or: ({3},{4},{5})".format(head_loc[0],head_loc[1],head_loc[2],pose[0],pose[1],pose[2]))
-                    #draw_3d_axis(debug_frame,pose,(head_pose[3],head_pose[4]),100)
-                    #draw_pose_data(debug_frame,pose,head_pose,color=(143, 184, 77))
+                        #print("Loc:({0},{1},{2}) , Or: ({3},{4},{5})".format(head_loc[0],head_loc[1],head_loc[2],pose[0],pose[1],pose[2]))
+                    #draw_3d_axis(debug_frame,pose,(int(head_bbox[0]),int(head_bbox[1])),100)
+                    draw_pose_data(debug_frame,pose,head_loc, head_bbox,color=(143, 184, 77))
+
+                    #publish detection image
+                    cvb = CvBridge()
+                    stamp = self.get_clock().now().to_msg()
+                    image_msg = cvb.cv2_to_imgmsg(debug_frame, encoding='bgr8')
+                    image_msg.header.stamp = stamp
+                    image_msg.header.frame_id = 'oak-d_frame'
+                    
+                    self.pub_rectified_img.publish(image_msg)
 
                 self.fps.update()
 
