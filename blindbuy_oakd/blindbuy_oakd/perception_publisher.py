@@ -188,6 +188,8 @@ class PalmDetection:
 DEPTH_THRESH_HIGH = 3000
 DEPTH_THRESH_LOW = 500
 CAM_FPS = 30
+RED_RATIO_PALM = 0.37
+RED_RATIO_FACE = 0.2
 
 # Required information for calculating spatial coordinates on the host
 mono_HFOV = np.deg2rad(73.5)
@@ -205,10 +207,10 @@ def crop_to_rect(frame):
 
 
 # Calculate spatial coordinates from depth map and bounding box (ROI)
-def calc_spatials(bbox, depth):
+def calc_spatials(bbox, depth,ratio,filter="mean"):
     # Decrese the ROI to 1/3 of the original ROI
-    deltaX = int((bbox[2] - bbox[0]) * 0.33)
-    deltaY = int((bbox[3] - bbox[1]) * 0.33)
+    deltaX = int((bbox[2] - bbox[0]) * ratio)
+    deltaY = int((bbox[3] - bbox[1]) * ratio)
     bbox[0] = bbox[0] + deltaX
     bbox[1] = bbox[1] + deltaY
     bbox[2] = bbox[2] - deltaX
@@ -217,16 +219,19 @@ def calc_spatials(bbox, depth):
     # Calculate the average depth in the ROI. TODO: median, median /w bins, mode
     cnt = 0.0
     sum = 0.0
+    median = []
     for x in range(bbox[2] - bbox[0]):
         for y in range(bbox[3] - bbox[1]):
             depthPixel = depth[bbox[1] + y][bbox[0] + x]
             if DEPTH_THRESH_LOW < depthPixel and depthPixel < DEPTH_THRESH_HIGH:
                 cnt+=1.0
                 sum+=depthPixel
+                median.append(depthPixel)
 
+    medianDepth = np.median(np.array(median))
     averageDepth = sum / cnt if 0 < cnt else 0
 
-    # Palm detection centroid
+    # Detection centroid
     centroidX = int((bbox[2] - bbox[0]) / 2) + bbox[0]
     centroidY = int((bbox[3] - bbox[1]) / 2) + bbox[1]
 
@@ -237,7 +242,13 @@ def calc_spatials(bbox, depth):
     angle_x = calc_angle(mono_HFOV, depth_Width, bb_x_pos)
     angle_y = calc_angle(mono_HFOV, depth_Width, bb_y_pos)
 
-    z = averageDepth;
+    if filter == "median":
+        z = medianDepth
+    elif filter == "mean":
+        z = averageDepth
+    else:
+        z = averageDepth
+
     x = z * math.tan(angle_x)
     y = -z * math.tan(angle_y)
 
@@ -271,7 +282,7 @@ def draw_palm_detection(debug_frame, palm_coords, depth):
     for bbox in palm_coords:
         draw_bbox(debug_frame,bbox, color)
         bbox_og = bbox.copy()
-        spatialCoords = calc_spatials(bbox, depth)
+        spatialCoords = calc_spatials(bbox, depth,RED_RATIO_PALM)
         x,y,z,cx,cy = spatialCoords
         #draw_man(debug_frame, bbox_og, (cx,cy), color)
         #print("{0},{1},{2},{3},{4}".format(x,y,z,cx,cy))
@@ -539,7 +550,7 @@ class PerceptionPublisher(Node):
                         pose_inQ.send(pose_data)
 
                         draw_bbox(debug_frame,bbox,color)
-                        head_loc = calc_spatials(bbox,depthFrame)
+                        head_loc = calc_spatials(bbox,depthFrame,RED_RATIO_FACE,filter="median")
 
                 palm_in = palmQ.tryGet()
 
@@ -571,8 +582,9 @@ class PerceptionPublisher(Node):
 
                 if head_or is not None:
                     pose = [val[0][0] for val in to_tensor_result(head_or).values()]
-                    self.publish_head_transform(head_loc,pose)
-                    print("Loc:({0},{1},{2}) , Or: ({3},{4},{5})".format(head_loc[0],head_loc[1],head_loc[2],pose[0],pose[1],pose[2]))
+                    if head_loc[2] is not np.nan:
+                        self.publish_head_transform(head_loc,pose)
+                        print("Loc:({0},{1},{2}) , Or: ({3},{4},{5})".format(head_loc[0],head_loc[1],head_loc[2],pose[0],pose[1],pose[2]))
                     #draw_3d_axis(debug_frame,pose,(head_pose[3],head_pose[4]),100)
                     #draw_pose_data(debug_frame,pose,head_pose,color=(143, 184, 77))
 
