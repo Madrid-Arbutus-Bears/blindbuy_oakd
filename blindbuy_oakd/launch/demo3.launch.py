@@ -74,6 +74,13 @@ def generate_launch_description():
             parameters=[{}],
         ),
         Node(
+            package='blindbuy_servers',
+            executable='product_distance_server',
+            name='product_distance_server',
+            output='screen',
+            parameters=[{}],
+        ),
+        Node(
             package='rviz2',
             executable='rviz2',
             name='rviz2',
