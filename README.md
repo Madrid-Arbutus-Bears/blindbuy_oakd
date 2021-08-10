@@ -1,4 +1,4 @@
-# blindbuy_oakd
+# BlindBuy: Shopping Assistant for Visually Impaired People
 
 ## Installation (tested on Ubuntu 20.04 - ROS 2 Foxy)
 
