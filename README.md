@@ -1,5 +1,9 @@
 # BlindBuy: Shopping Assistant for Visually Impaired People
 
+Shopping is a big problem for visually impaired people, especially in large self-service supermarkets. Not only must they  know how to guide themselves and detect obstacles, but also locate products and differentiate them from each other.
+
+The aim of the project is to create an embedded system located in a shopping cart which assists visually impaired people with shop navigation, product localization and obstacle avoidance. 
+
 ## Installation (tested on Ubuntu 20.04 - ROS 2 Foxy)
 
 [Install ROS2 Foxy](https://docs.ros.org/en/foxy/Installation/Linux-Install-Debians.html)
